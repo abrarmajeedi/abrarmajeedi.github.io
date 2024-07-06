@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Towards 3D Vision</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    
+    <script src="js/app.js"></script>
+    <script src="js/video_comparison.js"></script>
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                RICA<sup>2</sup>: Rubric-Informed, Calibrated Assessment of Actions</br> 
+                <small>
+                CVPR 2024
+                </small>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://abrarmajeedi.github.io">
+                          Abrar Majeedi
+                        </a>*
+                    </li>
+                    <li>
+                        <a href="">
+                          Viswanatha Reddy Gajjala
+                        </a>*
+                    </li>
+                    <li>
+                        <a href="">
+                          Satya Sai Srinath Namburi GNVV
+                        </a>
+                    <li>
+                        <a href="https://www.biostat.wisc.edu/~yli/">
+                          Yin Li
+                        </a>
+                    </li>
+                    </br>University of Wisconsin - Madison
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="https://arxiv.org/pdf/2403.17801.pdf">
+                        <image src="img/paper_image.png" height="60px">
+                            <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Mu24CVPR_Supp.pdf">
+                        <image src="img/supplement_image.png" height="60px">
+                            <h4><strong>Supplement</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <img src="img/teaser.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Abstract
+                </h3>
+                <p class="text-justify">
+                    The ability to quantify how well an action is carried out, also known as action quality assessment (AQA), has attracted recent interest in the vision community. 
+                    Unfortunately, prior methods often ignore the score rubric used by human experts and fall short at quantifying the uncertainty of the model prediction.
+                    To bridge the gap, we present RICA<sup>2</sup> -- a deep probabilistic model that integrates score rubric and accounts for prediction uncertainty for AQA.
+                    Central to our method lies in stochastic embeddings of action steps, defined on a graph structure that encodes the score rubric.
+                    The embeddings spread probabilistic density in the latent space, and allow our method to represent model uncertainty. 
+                    The graph encodes the scoring criteria, based on which the quality scores can be decoded. 
+                    We demonstrate that our method establishes new state of the art on public benchmarks including FineDiving, MTL-AQA, and JIGSAWS, with superior performance in <i>score prediction</i> and <i>uncertainty calibration</i>.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Method
+                </h3>
+                <img src="img/method.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <br>
+                The scene is modeled as a neural implicit surface in the form of an SDF. To render a transient, we approximate the idealized image formation process by sampling rays within each pixel's FoV, and subsequently points on those rays. This idealized transient waveform is then convolved with the sensor's laser impulse response to model the transient histogram formation. Finally, we optimize the scene representation by minimizing a loss between the rendered transients and the observations.
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Simulated Results
+                </h3>
+                <video id="v0" width="100%" autoplay loop muted controls>
+                  <source src="img/sim.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Real-world Results
+                </h3>
+                <video id="v0" width="100%" autoplay loop muted controls>
+                  <source src="img/real_captures_1.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Citation
+                </h3>
+                <div class="form-group col-md-12 col-md-offset-0">
+                    <textarea id="bibtex" class="form-control" readonly>
+@article{Mu24Towards3DVision,
+    title={Towards 3D Vision with Low-Cost Single-Photon Cameras}, 
+    author={Fangzhou Mu and Carter Sifferman and Sacha Jungerman and Yiquan Li and Mark Han and Michael Gleicher and Mohit Gupta and Yin Li},
+    year={2024},
+    eprint={2403.17801},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
