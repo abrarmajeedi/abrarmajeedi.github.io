@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Towards 3D Vision</title>
+    <title>RICA2</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
             <h2 class="col-md-12 text-center">
                 RICA<sup>2</sup>: Rubric-Informed, Calibrated Assessment of Actions</br> 
                 <small>
-                CVPR 2024
+                ECCV 2024
                 </small>
             </h2>
         </div>
@@ -72,15 +72,21 @@
             <div class="col-md-4 col-md-offset-4 text-center">
                 <ul class="nav nav-pills nav-justified">
                     <li>
-                        <a href="https://arxiv.org/pdf/2403.17801.pdf">
-                        <image src="img/paper_image.png" height="60px">
+                        <a href="https://arxiv.org/">
+                        <image src="img/paper_thumbnail.png" height="60px">
                             <h4><strong>Paper</strong></h4>
                         </a>
                     </li>
                     <li>
-                        <a href="Mu24CVPR_Supp.pdf">
-                        <image src="img/supplement_image.png" height="60px">
+                        <a href="https://arxiv.org/">
+                        <image src="img/supp_thumbnail.png" height="60px">
                             <h4><strong>Supplement</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/">
+                        <image src="img/github_icon.png" height="60px">
+                            <h4><strong>Code</strong></h4>
                         </a>
                     </li>
                 </ul>
@@ -89,7 +95,7 @@
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <img src="img/teaser.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <img src="img/rica2_teaser.svg" class="img-responsive" alt="Teaser Image" style="width:100%;">
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -116,9 +122,9 @@
                 <h3>
                     Method
                 </h3>
-                <img src="img/method.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <img src="img/rica2_method.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
                 <br>
-                The scene is modeled as a neural implicit surface in the form of an SDF. To render a transient, we approximate the idealized image formation process by sampling rays within each pixel's FoV, and subsequently points on those rays. This idealized transient waveform is then convolved with the sensor's laser impulse response to model the transient histogram formation. Finally, we optimize the scene representation by minimizing a loss between the rendered transients and the observations.
+                Short description
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -126,11 +132,9 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
-                    Simulated Results
+                    Main Results
                 </h3>
-                <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/sim.mp4" type="video/mp4" />
-                </video>
+                <img src="img/finediving_mtl_results_table.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -138,11 +142,9 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
-                    Real-world Results
+                 Calibration Results
                 </h3>
-                <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/real_captures_1.mp4" type="video/mp4" />
-                </video>
+                <img src="img/calibration_plots.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -155,11 +157,11 @@
                 </h3>
                 <div class="form-group col-md-12 col-md-offset-0">
                     <textarea id="bibtex" class="form-control" readonly>
-@article{Mu24Towards3DVision,
-    title={Towards 3D Vision with Low-Cost Single-Photon Cameras}, 
-    author={Fangzhou Mu and Carter Sifferman and Sacha Jungerman and Yiquan Li and Mark Han and Michael Gleicher and Mohit Gupta and Yin Li},
+@article{majeedi24rica2,
+    title={RICA^2: Rubric-Informed, Calibrated Assessment of Actions}, 
+    author={Abrar Majeedi and Viswanatha Reddy Gajjala and Sai Srinath Namburi and Yin Li},
     year={2024},
-    eprint={2403.17801},
+    eprint={},
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
