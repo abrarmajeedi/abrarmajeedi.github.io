@@ -56,7 +56,7 @@
     <tr>
       <td style="padding:20px;width:25%;vertical-align:middle">
         <div class="one">
-          <div class="two" id='npj_icon'>
+          <div class="two" id='rica2_icon'>
             <img src="images/rica2_icon.png" width="100%" />
           </div>
         </div>
@@ -120,6 +120,11 @@
         </p>
       </td>
     </tr>
+
+
+
+
+
     <tr>
       <td style="padding:20px;width:25%;vertical-align:middle">
         <div class="one">
@@ -148,10 +153,56 @@
         <a href="https://github.com/microsoft/MLCVQA">Code</a>
         <p></p>
         <p>
-				Assess perceptual quality of videos from modern machine learning-based codecs.
+				Assess perceptual quality of videos encoded by modern machine learning-based codecs.
         </p>
       </td>
     </tr>
+
+
+    <tr>
+      <td style="padding:20px;width:25%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='epic_2022_video'>
+            <video id="epic_video" width="100%" muted>
+              <source src="images/epic_2022_video.webm" type="video/webm">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </td>
+      <td style="padding:20px;width:75%;vertical-align:middle">
+        <a href="https://epic-kitchens.github.io/2022#results">
+          <span class="papertitle">Detecting Egocentric Actions with ActionFormer</span>
+        </a>
+        <br>
+        <a href="">Chenlin Zhang</a>, 
+        <a href="">Lin Sui</a>,
+        <strong>Abrar Majeedi</strong>,
+        <a href="">Viswantha Reddy Gajjala</a>,
+        <a href="https://www.biostat.wisc.edu/~yli/">Yin Li</a><br>
+        <em>EPIC @ CVPR Workshop</em> 2022
+        <br>
+        <a href="https://epic-kitchens.github.io/Reports/EPIC-KITCHENS-Challenges-2022-Report.pdf">Report</a>
+        /
+        <a href="https://github.com/happyharrycn/actionformer_release">Code</a>
+        <p></p>
+        <p>Assess perceptual quality of videos encoded by modern machine learning-based codecs.</p>
+      </td>
+    </tr>
+  </table>
+
+  <script>
+    const videoElement = document.getElementById('epic_video');
+
+    videoElement.addEventListener('mouseover', function() {
+      videoElement.play();
+    });
+
+    videoElement.addEventListener('mouseout', function() {
+      videoElement.pause();
+      videoElement.currentTime = 0; // Optional: reset to the beginning of the video
+    });
+  </script>
            
             
           </tbody></table>
