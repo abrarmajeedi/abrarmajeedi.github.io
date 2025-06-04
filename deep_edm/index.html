@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>DeepEDM</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    
+    <script src="js/app.js"></script>
+    <script src="js/video_comparison.js"></script>
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                LETS Forecast: Learning Embedology for Time Series Forecasting</br> 
+                <small>
+                ICML 2025
+                </small>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://abrarmajeedi.github.io">
+                          Abrar Majeedi
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Viswanatha Reddy Gajjala
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Satya Sai Srinath Namburi GNVV
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Nada Magdi Elkordi
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.biostat.wisc.edu/~yli/">
+                          Yin Li
+                        </a>
+                    </li>
+                    </br>University of Wisconsin - Madison
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="">
+                        <image src="img/paper_thumbnail.png" height="60px">
+                            <h4><strong>Paper (Coming soon)</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/abrarmajeedi/DeepEDM.git">
+                        <image src="img/github_icon.png" height="60px">
+                            <h4><strong>Code (Coming Soon)</strong></h4>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="img/rica2_poster.png">
+                        <image src="img/rica2_poster.png" height="60px">
+                            <h4><strong>Poster (Coming Soon)</strong></h4>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=q3YAEzhyYkI">
+                        <image src="img/youtube.png" height="60px">
+                            <h4><strong>Presentation (Coming Soon)</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <img src="img/main_fig.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Abstract
+                </h3>
+                <p class="text-justify">
+                    Real-world time series are often governed by complex nonlinear dynamics. Understanding these underlying dynamics is crucial for precise future prediction. While deep learning has achieved major success in time series forecasting, many existing approaches do not explicitly model the dynamics. To bridge this gap, we introduce DeepEDM, a framework that integrates nonlinear dynamical systems modeling with deep neural networks. Inspired by empirical dynamic modeling (EDM) and rooted in Takens' theorem, DeepEDM presents a novel deep model that learns a latent space from time-delayed embeddings, and employs kernel regression to approximate the underlying dynamics, while leveraging efficient implementation of softmax attention and allowing for accurate prediction of future time steps. To evaluate our method, we conduct comprehensive experiments on synthetic data of nonlinear dynamical systems as well as real-world time series across domains. Our results show that DeepEDM is robust to input noise, and outperforms state-of-the-art methods in forecasting accuracy.
+                </p>
+            </div>
+        </div>
+
+                <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Stay tuned for more details!
+                </h3>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Method
+                </h3>
+                <img src="img/method_fig.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <br>
+                Our method aims to assess the quality of actions within input videos by leveraging the structure of the action and human-designed scoring rubrics. Action in a video comprises a series of key steps, which are encoded as latent stochastic embeddings. These individual embeddings are aggregated to calculate a final quality score based on a pre-specified rubric. RICA<sup>2</sup> uses a deep probabilistic model that integrates a graph representation of the action steps and scoring rubric as a directed acyclic graph (DAG), while capturing prediction uncertainty through stochastic embeddings. This allows for both quality assessment and uncertainty estimation, ensuring the model can indicate when its predictions are reliable and when a human review is needed for uncertain actions.
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Main Results
+                </h3>
+                <img src="img/finediving_mtl_results_table.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                 Calibration Results
+                </h3>
+                <img src="img/calibration_plots.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Citation
+                </h3>
+                <div class="form-group col-md-12 col-md-offset-0">
+                    <textarea id="bibtex" class="form-control" readonly>
+@article{majeedi24rica2,
+    title={RICA^2: Rubric-Informed, Calibrated Assessment of Actions}, 
+    author={Majeedi, Abrar and Gajjala, Viswanatha Reddy and GNVV, Satya Sai Srinath Namburi and Li, Yin},
+    year={2024},
+    booktitle={European conference on computer vision},
+    primaryClass={cs.CV}
+}
+                    </textarea>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
