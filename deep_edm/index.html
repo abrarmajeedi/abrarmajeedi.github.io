@@ -101,9 +101,9 @@
                         </a>
                     </li> -->
                     <li>
-                        <a href="https://www.youtube.com/watch?v=q3YAEzhyYkI">
-                        <image src="img/youtube.png" height="60px">
-                            <h4><strong>Presentation (Coming Soon)</strong></h4>
+                        <a href="https://recorder-v3.slideslive.com/#/share?share=102851&s=cc9e12f6-3e86-4a91-8b65-70fdf207964b">
+                        <image src="img/slides_icon.png" height="60px">
+                            <h4><strong>Talk</strong></h4>
                         </a>
                     </li>
                 </ul>
@@ -121,22 +121,30 @@
             </div>
         </div>
 
-                <div class="row">
+
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3 style="font-weight: bold;">
-                    Stay tuned for more details!
+                    Background
                 </h3>
+                <br>
+        DeepEDM builds on the foundations of Takens’ Theorem and Empirical Dynamic Modeling (EDM). Takens’ Theorem guarantees that the state space of a deterministic dynamical system can be reconstructed from time-delayed embeddings of univariate observations, under certain smoothness and dimensionality conditions. EDM operationalizes this by forming a time-delay embedding of the observed signal and using local geometric methods, such as Simplex projection, to forecast future values. However, EDM methods method are sensitive to noise, model each time series independently, and are fundamentally limited to short-term forecasting.
             </div>
+            <div class="col-md-8 col-md-offset-2"></div>
         </div>
 
-        <!-- <div class="row">
+                <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3 style="font-weight: bold;">
                     Method
                 </h3>
-                <img src="img/method_fig.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <img src="img/main_fig.png" class="img-responsive" alt="Teaser Image" style="display: block; margin: 0 auto; width: 100%;">
                 <br>
-                Our method aims to assess the quality of actions within input videos by leveraging the structure of the action and human-designed scoring rubrics. Action in a video comprises a series of key steps, which are encoded as latent stochastic embeddings. These individual embeddings are aggregated to calculate a final quality score based on a pre-specified rubric. RICA<sup>2</sup> uses a deep probabilistic model that integrates a graph representation of the action steps and scoring rubric as a directed acyclic graph (DAG), while capturing prediction uncertainty through stochastic embeddings. This allows for both quality assessment and uncertainty estimation, ensuring the model can indicate when its predictions are reliable and when a human review is needed for uncertain actions.
+
+            Our method extends EDM by incorporating a differentiable architecture that improves robustness, scalability, and forecasting performance. DeepEDM constructs time-delayed embeddings of the input sequence, as in classical EDM, and projects them into a learned latent space for improved noise tolerance. In this latent space, it applies kernel regression using efficient softmax attention to perform forecasting, followed by a learned decoder to reconstruct the output sequence. <br> <br>
+
+
+            This approach retains the foundational structure of EDM while removing key limitations: it supports longer forecasting horizons, learns a single model across sequences, and enables end-to-end optimization.
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -144,19 +152,32 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3 style="font-weight: bold;">
-                    Main Results
+                    Experiments and Results
                 </h3>
-                <img src="img/finediving_mtl_results_table.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <img src="img/data_syn.png" class="img-responsive" alt="data" style="display: block; margin: 0 auto; width: 50%;">
+
+                We conduct extensive experiments on synthetic datasets generated from known dynamical systems with varying levels of injected noise, as well as on standard real-world time series benchmarks from diverse domains. The results demonstrate that DeepEDM is robust to input noise and consistently outperforms state-of-the-art methods in forecasting accuracy.<br> <br>
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3 style="font-weight: bold;">
-                 Calibration Results
-                </h3>
-                <img src="img/calibration_plots.png" class="img-responsive" alt="Teaser Image" style="width:100%;">
+                <h4 style="font-weight: bold;">
+                    Results on Synthetic Data Experiments
+                </h4>
+                <img src="img/syn_results.png" class="img-responsive" alt="Teaser Image" style="display: block; margin: 0 auto; width: 80%;">
+                We conduct extenstive experiments on synthetic data of nonlinear dynamical systems as well as real-world time series across domains. Our results show that DeepEDM is robust to input noise, and outperforms state-of-the-art methods in forecasting accuracy. <br> <br>
+            </div>
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h4 style="font-weight: bold;">
+                 Results on Standard Forecasting Benchmarks
+                </h4>
+                <img src="img/bench_results.png" class="img-responsive" alt="Benchmark results" style="display: block; margin: 0 auto; width: 80%;">
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -169,17 +190,18 @@
                 </h3>
                 <div class="form-group col-md-12 col-md-offset-0">
                     <textarea id="bibtex" class="form-control" readonly>
-@article{majeedi24rica2,
-    title={RICA^2: Rubric-Informed, Calibrated Assessment of Actions}, 
-    author={Majeedi, Abrar and Gajjala, Viswanatha Reddy and GNVV, Satya Sai Srinath Namburi and Li, Yin},
-    year={2024},
-    booktitle={European conference on computer vision},
-    primaryClass={cs.CV}
+@inproceedings{
+majeedi2025lets,
+title={{LETS} Forecast: Learning Embedology for Time Series Forecasting},
+author={Abrar Majeedi and Viswanatha Reddy Gajjala and Satya Sai Srinath Namburi GNVV and Nada Magdi Elkordi and Yin Li},
+booktitle={Forty-second International Conference on Machine Learning},
+year={2025},
+url={https://openreview.net/forum?id=LLk1qYQatJ}
 }
                     </textarea>
                 </div>
             </div>
-        </div> -->
+        </div> 
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
