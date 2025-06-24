@@ -40,6 +40,7 @@
                 </small>
             </h2>
         </div>
+        
         <div class="row">
             <div class="col-md-12 text-center">
                 <ul class="list-inline">
@@ -72,6 +73,13 @@
                 </ul>
             </div>
         </div>
+        <div class="row">
+    <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+        <h3 style="font-weight: bold; color: red; font-size: 20px;">
+            Accepted at ICML 2025!
+        </h3>
+    </div>
+</div>
         <div class="row text-center">
             <div class="col-md-8 col-md-offset-2">
             <img src="img/taken.gif" class="img-responsive center-block" alt="Teaser Image" style="height:300px;">
@@ -128,7 +136,7 @@
                     Background
                 </h3>
                 <br>
-        DeepEDM builds on the foundations of Takens’ Theorem and Empirical Dynamic Modeling (EDM). Takens’ Theorem guarantees that the state space of a deterministic dynamical system can be reconstructed from time-delayed embeddings of univariate observations, under certain smoothness and dimensionality conditions. EDM operationalizes this by forming a time-delay embedding of the observed signal and using local geometric methods, such as Simplex projection, to forecast future values. However, EDM methods method are sensitive to noise, model each time series independently, and are fundamentally limited to short-term forecasting.
+        DeepEDM builds on the foundations of Takens’ Theorem and Empirical Dynamic Modeling (EDM). Takens’ Theorem guarantees that the state space of a deterministic dynamical system can be reconstructed from time-delayed embeddings of univariate observations, under certain smoothness and dimensionality conditions. EDM operationalizes this by forming a time-delay embedding of the observed signal and using local geometric methods, such as Simplex projection, to forecast future values. However, Simplex is sensitive to noise, models each time series independently, and is fundamentally limited to short-term forecasting.
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
@@ -141,10 +149,10 @@
                 <img src="img/main_fig.png" class="img-responsive" alt="Teaser Image" style="display: block; margin: 0 auto; width: 100%;">
                 <br>
 
-            Our method extends EDM by incorporating a differentiable architecture that improves robustness, scalability, and forecasting performance. DeepEDM constructs time-delayed embeddings of the input sequence, as in classical EDM, and projects them into a learned latent space for improved noise tolerance. In this latent space, it applies kernel regression using efficient softmax attention to perform forecasting, followed by a learned decoder to reconstruct the output sequence. <br> <br>
+            DeepEDM extends traditional EDM by introducing a learnable neural framework that preserves the core principle of dynamical system reconstruction while addressing key practical limitations. The method operates on an extended time series formed by concatenating the original lookback window with initial predictions from a simple base model, effectively removing the constraint that forecasting horizons must be shorter than the lookback window. Rather than working directly with noisy time-delayed embeddings, DeepEDM employs a learned encoder to project these embeddings into a robust latent space where meaningful comparisons can be made despite measurement noise. <br>
 
 
-            This approach retains the foundational structure of EDM while removing key limitations: it supports longer forecasting horizons, learns a single model across sequences, and enables end-to-end optimization.
+            The forecasting process replaces traditional nearest neighbor search with differentiable kernel regression using the Nadaraya-Watson estimator, where attention weights are computed across all data points in the latent space rather than selecting discrete neighbors. This soft attention mechanism, implemented efficiently through optimized softmax operations, allows the model to leverage information from the entire lookback window while maintaining the theoretical foundation of Simplex projection. A final decoder network reconstructs predictions from the time-delayed outputs and provides additional denoising capabilities. The entire architecture is trained end-to-end using a combined loss function that minimizes both prediction errors and temporal differences, enabling the model to learn generalizable patterns across multiple time series while maintaining the dynamical systems perspective of EDM.
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
