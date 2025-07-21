@@ -174,7 +174,7 @@
                 <h4 style="font-weight: bold;">
                     Results on Synthetic Data Experiments
                 </h4>
-                <img src="img/syn_results.png" class="img-responsive" alt="Teaser Image" style="display: block; margin: 0 auto; width: 80%;">
+                <img src="img/synthetic.svg" class="img-responsive" alt="Teaser Image" style="display: block; margin: 0 auto; width: 70%;">
                 We conduct extenstive experiments on synthetic data of nonlinear dynamical systems as well as real-world time series across domains. Our results show that DeepEDM is robust to input noise, and outperforms state-of-the-art methods in forecasting accuracy. <br> <br>
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
@@ -185,31 +185,38 @@
                 <h4 style="font-weight: bold;">
                  Results on Standard Forecasting Benchmarks
                 </h4>
-                <img src="img/bench_results.png" class="img-responsive" alt="Benchmark results" style="display: block; margin: 0 auto; width: 80%;">
+                <img src="img/benchmark.svg" class="img-responsive" alt="Benchmark results" style="display: block; margin: 0 auto; width: 80%;">
             </div>
             <div class="col-md-8 col-md-offset-2"></div>
         </div>
 
         <br>
-        <div class="row">
+                <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3 style="font-weight: bold;">
-                    Citation
-                </h3>
-                <div class="form-group col-md-12 col-md-offset-0">
-                    <textarea id="bibtex" class="form-control" readonly>
-@inproceedings{
-majeedi2025lets,
-title={{LETS} Forecast: Learning Embedology for Time Series Forecasting},
-author={Abrar Majeedi and Viswanatha Reddy Gajjala and Satya Sai Srinath Namburi GNVV and Nada Magdi Elkordi and Yin Li},
-booktitle={Forty-second International Conference on Machine Learning},
-year={2025},
-url={https://openreview.net/forum?id=LLk1qYQatJ}
-}
-                    </textarea>
-                </div>
+                <h4 style="font-weight: bold;">
+                 Results on Generalization to Unseen Timeseries
+                </h4>
+                We also evaluate the generalization capabilities of DeepEDM on unseen time series, where we train it on a subset of timeseries (i.e. variates) within a dataset and then test it on the remaining unseen timeseries. The results show that DeepEDM is able to generalize well to unseen timeseries, outperforming state-of-the-art methods.
+                <img src="img/unseen.svg" class="img-responsive" alt="Benchmark results" style="display: block; margin: 0 auto; width: 60%;">
             </div>
-        </div> 
+            <div class="col-md-8 col-md-offset-2"></div>
+        </div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h3 style="font-weight: bold;">Citation</h3>
+        <div class="form-group col-md-12">
+            <pre><code>
+@inproceedings{majeedi2025lets,
+  title={{LETS} Forecast: Learning Embedology for Time Series Forecasting},
+  author={Abrar Majeedi and Viswanatha Reddy Gajjala and Satya Sai Srinath Namburi GNVV and Nada Magdi Elkordi and Yin Li},
+  booktitle={Forty-second International Conference on Machine Learning},
+  year={2025},
+  url={https://openreview.net/forum?id=LLk1qYQatJ}
+}
+            </code></pre>
+        </div>
+    </div>
+</div>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
