@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>DualVision</title>
+
+    <meta name="description" content="DualVision: RGB-Infrared Multimodal Large Language Models for Robust Visual Reasoning">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    
+    <script src="js/app.js"></script>
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                <b>DualVision</b>: RGB–Infrared Multimodal Large Language Models<br>for Robust Visual Reasoning</br> 
+                <small>
+                CVPR Findings 2026
+                </small>
+            </h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://abrarmajeedi.github.io">
+                          Abrar Majeedi<sup>1</sup>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Zhiyuan Ruan<sup>2</sup>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Ziyi Zhao<sup>2</sup>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Hongcheng Wang<sup>2</sup>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                          Jianglin Lu<sup>3</sup>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.biostat.wisc.edu/~yli/">
+                          Yin Li<sup>1</sup>
+                        </a>
+                    </li>
+                    </br>
+                    <sup>1</sup>University of Wisconsin-Madison &nbsp;&nbsp;
+                    <sup>2</sup>Amazon &nbsp;&nbsp;
+                    <sup>3</sup>Northeastern University
+                </ul>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-md-8 col-md-offset-2">
+                <img src="img/highlevel_cropped.png" class="img-responsive center-block" alt="Teaser Image" style="width:90%;">
+                <p class="text-center" style="font-size: 13px; margin-top: 10px;">
+                    When RGB visibility drops (e.g. at night) VLMs struggle to "see and reason," limiting their reliability in real-world applications such as autonomous driving. Infrared complements RGB by remaining robust under such degradations. DualVision efficiently fuses both modalities, enabling robust vision language modeling while reducing computation by ~75% compared to naïve fusion.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="https://arxiv.org/abs/">
+                        <image src="img/paper_thumbnail.png" height="60px">
+                            <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/abrarmajeedi/DualVision">
+                        <image src="img/github_icon.png" height="60px">
+                            <h4><strong>Code</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                        <image src="img/dataset_icon.svg" height="60px">
+                            <h4><strong>Dataset</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Abstract
+                </h3>
+                <p class="text-justify">
+                    Multimodal large language models (MLLMs) have achieved impressive performance on visual reasoning tasks with RGB imagery, yet they remain fragile under common degradations, such as fog, blur, or low-light conditions. Infrared (IR) imaging, a long-established complement to RGB, offers inherent robustness in these conditions, but its integration into MLLMs remains underexplored. To bridge this gap, we propose <b>DualVision</b>, a lightweight fusion module that efficiently incorporates IR–RGB information into MLLMs via patch-level localized cross-attention. To support training and evaluation and to facilitate future research, we also introduce <b>DV-204K</b>, a dataset of ~25K publicly available aligned IR–RGB image pairs with 204K modality-specific QA annotations, and <b>DV-500</b>, a benchmark of 500 IR–RGB image pairs with 500 QA pairs designed for evaluating cross-modal reasoning. Leveraging these datasets, we benchmark both open- and closed-source MLLMs and demonstrate that DualVision delivers strong empirical performance under a wide range of visual degradations.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Motivation
+                </h3>
+                <p class="text-justify">
+                    Although RGB imagery provides rich color and texture information, it remains vulnerable when inputs are degraded by adverse visual conditions such as low-light environments, motion- or defocus-induced blur, and non-ideal weather like rain or fog. These degradations are frequent realities in practical deployment, particularly in domains such as transportation, surveillance, and health, where robustness is paramount.
+                </p>
+                <p class="text-justify">
+                    Infrared (IR) imaging offers a valuable complement: by capturing electromagnetic radiation beyond the visible spectrum, IR can remain effective in darkness, fog, and other challenging environments. Fusing RGB and IR signals provides a promising pathway towards more robust visual perception and reasoning by leveraging their complementary strengths.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Method
+                </h3>
+                <img src="img/main_fig.png" class="img-responsive" alt="Method Figure" style="display: block; margin: 0 auto; width: 100%;">
+                <br>
+                <p class="text-justify">
+                    DualVision presents a lightweight RGB-IR fusion module designed for MLLMs. Instead of interleaving tokens from IR and RGB, DualVision performs <b>multi-scale localized cross-attention</b>, allowing each RGB patch token to attend only to spatially corresponding IR regions. This design injects complementary IR cues where they are relevant, has low computational overhead, and remains compatible with many existing MLLMs.
+                </p>
+                <p class="text-justify">
+                    Our key innovations include:
+                </p>
+                <ul>
+                    <li><b>2D Local Cross-Attention:</b> Each RGB token attends only to IR tokens within a radius-r region centered at its location, enforcing spatially aligned fusion while reducing the compute cost of global cross-modal interaction.</li>
+                    <li><b>Multi-Scale Design:</b> Multiple 2D local cross-attention blocks are applied sequentially with progressively increased radii, capturing interactions across local regions with varying sizes while preserving locality.</li>
+                    <li><b>Computational Efficiency:</b> RGB-IR concatenation yields 2N tokens with cost O(4N²). DualVision fuses both modalities into N tokens, reducing the cost to O(N²)—a 4× reduction (~75% compute savings).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Datasets
+                </h3>
+                <img src="img/dataset_example.png" class="img-responsive" alt="Dataset Examples" style="display: block; margin: 0 auto; width: 80%;">
+                <br>
+                <p class="text-justify">
+                    We introduce two new datasets to support training and evaluation of IR-RGB MLLMs:
+                </p>
+                <ul>
+                    <li><b>DV-204K:</b> A dataset of ~25K aligned IR–RGB image pairs with ~204K modality-aware question-answer annotations designed for instruction tuning.</li>
+                    <li><b>DV-500:</b> A carefully curated evaluation benchmark featuring 500 IR-RGB image pairs with 500 associated QA pairs, designed for evaluating cross-modal reasoning under various degradation conditions.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Experiments and Results
+                </h3>
+                <h4 style="font-weight: bold;">
+                    Performance by Modalities (IR, RGB, RGB+IR)
+                </h4>
+                <img src="img/modality_ablation.png" class="img-responsive" alt="Modality Ablation" style="display: block; margin: 0 auto; width: 85%;">
+                <p class="text-justify">
+                    IR-only performance stays flat across degradations, RGB-only performance drops sharply as degradation severity increases, and RGB+IR provides the most robust results.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h4 style="font-weight: bold;">
+                    Comparison of Fusion Methods
+                </h4>
+                <img src="img/plots.png" class="img-responsive" alt="Fusion Results" style="display: block; margin: 0 auto; width: 85%;">
+                <p class="text-justify">
+                    We compare several fusion strategies: addition, adaptive addition, concatenation, and our DualVision. DualVision delivers the best performance, winning 11/13 evaluation settings over both clean and degraded RGB inputs.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h4 style="font-weight: bold;">
+                    Comparison with Baselines
+                </h4>
+                <p class="text-justify">
+                    We benchmark against both open- and closed-source MLLMs including LLaVA 1.5–7B, Qwen2-VL 7B, LLaVA-Next Interleave 7B, LLaMA-4 Scout, Claude Sonnet 3.5v2, and Claude Opus 4. DualVision consistently outperforms all baselines across both clean and degraded settings.
+                </p>
+                <div class="table-responsive" style="margin-top: 15px;">
+                    <table class="table table-bordered table-striped" style="font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Method</th>
+                                <th rowspan="2">Original</th>
+                                <th colspan="4" class="text-center">Blur</th>
+                                <th colspan="4" class="text-center">Darkness</th>
+                                <th colspan="4" class="text-center">Fog</th>
+                            </tr>
+                            <tr>
+                                <th>Low</th><th>Mod.</th><th>High</th><th>Highest</th>
+                                <th>Low</th><th>Mod.</th><th>High</th><th>Highest</th>
+                                <th>Low</th><th>Mod.</th><th>High</th><th>Highest</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="14"><strong>Without Finetuning</strong></td></tr>
+                            <tr>
+                                <td>LLaVA 1.5 (7B)</td>
+                                <td>81.2</td><td>79.0</td><td>76.0</td><td>73.2</td><td>72.6</td>
+                                <td>74.0</td><td>72.8</td><td>73.2</td><td>71.2</td>
+                                <td>81.0</td><td>79.2</td><td>78.4</td><td>71.4</td>
+                            </tr>
+                            <tr>
+                                <td>Qwen2-VL (7B)</td>
+                                <td><strong>89.8</strong></td><td>77.8</td><td>73.6</td><td>70.8</td><td>69.4</td>
+                                <td>89.6</td><td>85.6</td><td>82.6</td><td>78.4</td>
+                                <td>85.0</td><td>79.4</td><td>75.2</td><td>65.6</td>
+                            </tr>
+                            <tr>
+                                <td>LLaVA-Next Interleave (7B)</td>
+                                <td>88.6</td><td>81.4</td><td>78.4</td><td>75.2</td><td>73.6</td>
+                                <td>86.4</td><td>86.0</td><td>85.6</td><td>81.4</td>
+                                <td>85.0</td><td>83.8</td><td>79.8</td><td>73.4</td>
+                            </tr>
+                            <tr>
+                                <td>Claude Sonnet-3.5 v2</td>
+                                <td>87.4</td><td>77.8</td><td>74.8</td><td>70.8</td><td>72.0</td>
+                                <td>85.4</td><td>78.8</td><td>75.6</td><td>68.0</td>
+                                <td>80.0</td><td>70.2</td><td>68.4</td><td>64.4</td>
+                            </tr>
+                            <tr><td colspan="14"><strong>Finetuned</strong></td></tr>
+                            <tr>
+                                <td>LLaVA 1.5 (7B) + FT</td>
+                                <td>87.15</td><td>83.50</td><td>82.13</td><td>81.93</td><td>80.32</td>
+                                <td>86.35</td><td>85.94</td><td>85.54</td><td>84.94</td>
+                                <td>85.94</td><td>85.94</td><td>84.74</td><td>78.71</td>
+                            </tr>
+                            <tr style="background-color: #e8f4e8;">
+                                <td><strong>DualVision (Ours)</strong></td>
+                                <td>88.38</td>
+                                <td><strong>84.77</strong></td><td><strong>84.37</strong></td><td><strong>82.36</strong></td><td><strong>82.57</strong></td>
+                                <td><strong>88.38</strong></td><td><strong>87.58</strong></td><td><strong>87.58</strong></td><td><strong>86.57</strong></td>
+                                <td><strong>87.98</strong></td><td><strong>87.17</strong></td><td><strong>84.97</strong></td><td><strong>80.76</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h4 style="font-weight: bold;">
+                    Qualitative Results
+                </h4>
+                <img src="img/gt_vs_pred.png" class="img-responsive" alt="Qualitative Results" style="display: block; margin: 0 auto; width: 90%;">
+                <p class="text-justify">
+                    Both methods, finetuned on DV-204K, answer correctly with clean RGB–IR inputs (left). When the RGB is degraded (right), DualVision remains robust, while finetuned LLaVA-1.5 shows reduced reliability.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    Contributions
+                </h3>
+                <ul>
+                    <li>Our work is among the first to develop MLLMs that integrate RGB and IR modalities for robust visual reasoning under visual degradations (e.g., blur, low-light, and fog).</li>
+                    <li>We introduce DualVision, a lightweight IR-RGB fusion module with enhanced robustness to degradations, while remaining compatible with existing MLLMs.</li>
+                    <li>To support training and evaluation of IR-RGB MLLMs, we create and release two datasets: DV-204K for instruction tuning and DV-500 for evaluation.</li>
+                    <li>Through extensive experiments, we demonstrate strong empirical results of DualVision under various degradations.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">Citation</h3>
+                <div class="form-group col-md-12">
+                    <pre><code>
+@inproceedings{majeedi2026dualvision,
+  title={DualVision: RGB-Infrared Multimodal Large Language Models for Robust Visual Reasoning},
+  author={Abrar Majeedi and Zhiyuan Ruan and Ziyi Zhao and Hongcheng Wang and Jianglin Lu and Yin Li},
+  booktitle={IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+  year={2026}
+}
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <p>
+                The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
