@@ -10,7 +10,7 @@
       jointly over video, sensor data, and text, and solving real clinical problems,
       especially in Neonatology. I did my PhD at the University of Wisconsin-Madison,
       where I was fortunate to be advised by
-      <a href="https://www.biostat.wisc.edu/~yli/">Prof. Yin Li</a>.
+      <a href="https://www.biostat.wisc.edu/~yli/" target="_blank" rel="noopener">Prof. Yin Li</a>.
     </p>
     <p>
       I have also gained valuable research experience through internships at
@@ -18,12 +18,16 @@
     </p>
 
     <p class="hero-links">
-      {% for link in site.links %}<a href="{{ link.url }}">{{ link.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
+      {%- comment -%}
+        Everything opens in a new tab except mailto:, which would otherwise leave
+        an empty tab behind after handing off to the mail client.
+      {%- endcomment -%}
+      {% for link in site.links %}{% assign newtab = ' target="_blank" rel="noopener"' %}{% if link.url contains 'mailto:' %}{% assign newtab = '' %}{% endif %}<a href="{{ link.url }}"{{ newtab }}>{{ link.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
     </p>
   </div>
 
   <div class="hero-photo">
-    <a href="{{ '/images/abrar_headshot.png' | relative_url }}">
+    <a href="{{ '/images/abrar_headshot.png' | relative_url }}" target="_blank" rel="noopener">
       <img src="{{ '/images/abrar_headshot.png' | relative_url }}" alt="Abrar Majeedi">
     </a>
   </div>

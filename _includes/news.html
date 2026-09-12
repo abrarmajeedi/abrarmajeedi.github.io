@@ -4,7 +4,11 @@
     {% for item in site.data.news %}
     <div class="news-item">
       <div class="news-date">{{ item.date }}</div>
-      <div class="news-text">{{ item.text }}</div>
+      {%- comment -%}
+        Links inside news text are authored as raw HTML in _data/news.yml, so the
+        new-tab attributes are injected here. New entries pick this up for free.
+      {%- endcomment -%}
+      <div class="news-text">{{ item.text | replace: '<a href=', '<a target="_blank" rel="noopener" href=' }}</div>
     </div>
     {% endfor %}
   </div>

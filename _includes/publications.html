@@ -10,13 +10,13 @@
     {%- endcomment -%}
     {%- assign authors = pub.authors | replace_first: '**', '<strong>' | replace_first: '**', '</strong>' -%}
     {%- for entry in site.data.author_links -%}
-      {%- capture anchor -%}<a href="{{ entry[1] }}">{{ entry[0] }}</a>{%- endcapture -%}
+      {%- capture anchor -%}<a href="{{ entry[1] }}" target="_blank" rel="noopener">{{ entry[0] }}</a>{%- endcapture -%}
       {%- assign authors = authors | replace: entry[0], anchor -%}
     {%- endfor -%}
 
     <article class="pub">
       <div class="pub-media">
-        <a href="{{ pub.url }}">
+        <a href="{{ pub.url }}" target="_blank" rel="noopener">
           {% if pub.media.type == 'video' %}
           {%- comment -%}
             Behaves like the animated GIF used by the LETS Forecast entry: it plays and
@@ -34,11 +34,11 @@
       </div>
 
       <div class="pub-body">
-        <h3 class="pub-title"><a href="{{ pub.url }}">{{ pub.title }}</a></h3>
+        <h3 class="pub-title"><a href="{{ pub.url }}" target="_blank" rel="noopener">{{ pub.title }}</a></h3>
         <p class="pub-authors">{{ authors }}</p>
         <p class="pub-venue"><em>{{ pub.venue }}</em> {{ pub.year }}</p>
         <p class="pub-links">
-          {% for l in pub.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
+          {% for l in pub.links %}<a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
         </p>
         <p class="pub-blurb">{{ pub.blurb }}</p>
       </div>
