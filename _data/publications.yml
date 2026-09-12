@@ -1,0 +1,108 @@
+# Add a new paper by copying one block and editing it. Newest first.
+#   authors     wrap your own name in **double asterisks**
+#   url         where the title links to
+#   media.type  image | video
+#   links       rendered in order, separated by "/"
+
+- title: "DualVision: RGB–Infrared Multimodal Large Language Models for Robust Visual Reasoning"
+  url: https://abrarmajeedi.github.io/dualvision/
+  authors: "**Abrar Majeedi**, Zhiyuan Ruan, Ziyi Zhao, Hongcheng Wang, Jianglin Lu, Yin Li"
+  venue: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings
+  year: 2026
+  media:
+    type: image
+    src: dualvision/img/main_fig_a.png
+  links:
+    - {label: Project Page, url: "https://abrarmajeedi.github.io/dualvision"}
+    - {label: Code, url: "https://github.com/abrarmajeedi/DualVision"}
+  blurb: >-
+    A lightweight RGB-IR fusion module for multimodal large language models that enables
+    robust visual reasoning under visual degradations like blur, low-light, and fog.
+
+- title: "LETS Forecast: Learning Embedology for Time Series Forecasting"
+  url: https://abrarmajeedi.github.io/deep_edm/
+  authors: "**Abrar Majeedi**, Viswanatha Reddy Gajjala, Satya Sai Srinath Namburi GNVV, Nada Elkordi, Yin Li"
+  venue: International Conference on Machine Learning (ICML)
+  year: 2025
+  media:
+    type: image
+    src: deep_edm/img/taken.gif
+  links:
+    - {label: Project Page, url: "https://abrarmajeedi.github.io/deep_edm"}
+    - {label: Code, url: "https://github.com/abrarmajeedi/DeepEDM"}
+    - {label: Paper Link, url: "https://arxiv.org/abs/2506.06454"}
+  blurb: >-
+    A novel time series forecasting method that combines principles from nonlinear
+    dynamical systems with deep learning to model latent temporal structure for
+    accurate forecasts.
+
+- title: "RICA<sup>2</sup>: Rubric-Informed, Calibrated Assessment of Actions"
+  url: https://abrarmajeedi.github.io/rica2_aqa/
+  authors: "**Abrar Majeedi**, Viswanatha Reddy Gajjala, Satya Sai Srinath Namburi GNVV, Yin Li"
+  venue: European Conference on Computer Vision (ECCV)
+  year: 2024
+  media:
+    type: image
+    src: images/rica2_icon.png
+  links:
+    - {label: Project page, url: "https://abrarmajeedi.github.io/rica2_aqa/"}
+    - {label: Code, url: "https://github.com/abrarmajeedi/rica2_aqa"}
+    - {label: Paper Link, url: "https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/08001.pdf"}
+  blurb: >-
+    Action quality assessment in videos by incorporating human designed scoring rubrics
+    while providing calibrated uncertainty estimates.
+
+- title: Glottic Opening Detection using Deep Learning for Neonatal Intubation with Video Laryngoscopy
+  url: https://www.nature.com/articles/s41372-024-02171-3
+  authors: "**Abrar Majeedi**, Patrick Peebles, Yin Li, Ryan McAdams"
+  venue: Nature - Journal of Perinatology
+  year: Nov 2024
+  media:
+    type: image
+    src: images/j_of_p_figure.jpg
+  links:
+    - {label: Paper link, url: "https://www.nature.com/articles/s41372-024-02171-3"}
+  blurb: >-
+    Automatically detect the glottic opening during neonatal intubation using video
+    laryngoscopy to improve intubation outcomes.
+
+- title: Deep learning to quantify care manipulation activities in neonatal intensive care units
+  url: https://www.nature.com/articles/s41746-024-01164-y
+  authors: "**Abrar Majeedi**, Ryan McAdams, Ravneet Kaur, Shubham Gupta, Harpreet Singh, Yin Li"
+  venue: npj Digital Medicine
+  year: June 2024
+  media:
+    type: image
+    src: images/npj_icon.png
+  links:
+    - {label: Paper Link, url: "https://www.nature.com/articles/s41746-024-01164-y.pdf"}
+    - {label: Code, url: "https://github.com/abrarmajeedi/DL-to-quantify-manipulation-activities-in-NICUs"}
+  blurb: >-
+    Automatically quantify care manipulation activities in neonatal intensive care units
+    (NICUs), while integrating physiological signal data to monitor neonatal stress in NICUs.
+
+- title: Full Reference Video Quality Assessment for Machine Learning-Based Video Codecs
+  url: https://arxiv.org/abs/2309.00769
+  authors: "**Abrar Majeedi**, Babak Naderi, Yasaman Hosseinkashi, Juhee Cho, Ruben Alvarez Martinez, Ross Cutler"
+  venue: Preprint
+  year: 2022
+  media:
+    type: image
+    src: images/mlcvqa_icon.png
+  links:
+    - {label: Paper, url: "https://arxiv.org/abs/2309.00769"}
+    - {label: Code, url: "https://github.com/microsoft/MLCVQA"}
+  blurb: Assess perceptual quality of videos encoded by Machine Learning-based Video Codecs.
+
+- title: Detecting Egocentric Actions with ActionFormer
+  url: https://epic-kitchens.github.io/2022#results
+  authors: "Chenlin Zhang, Lin Sui, **Abrar Majeedi**, Viswanatha Reddy Gajjala, Yin Li"
+  venue: EPIC @ CVPR Workshop
+  year: 2022
+  media:
+    type: video
+    src: images/epic_2022_video.webm
+  links:
+    - {label: Report, url: "https://epic-kitchens.github.io/Reports/EPIC-KITCHENS-Challenges-2022-Report.pdf"}
+    - {label: Code, url: "https://github.com/happyharrycn/actionformer_release"}
+  blurb: Won 2nd place in the Egocentric action detection challenge

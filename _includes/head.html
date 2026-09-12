@@ -1,0 +1,39 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ site.title }}</title>
+  <meta name="author" content="{{ site.author }}">
+  <meta name="description" content="{{ site.description }}">
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}/">
+  <meta property="og:image" content="{{ '/images/abrar_headshot.png' | absolute_url }}">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="shortcut icon" href="{{ '/images/favicon/favicon.ico' | relative_url }}" type="image/x-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+  <!-- Set the theme before first paint so there is no flash of the wrong mode. -->
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('theme'); } catch (e) {}
+      var dark = stored ? stored === 'dark'
+                        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+
+      // Gates the scroll-reveal animation. Without this class the sections are
+      // always visible, so the page still renders if JavaScript never runs.
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+</head>

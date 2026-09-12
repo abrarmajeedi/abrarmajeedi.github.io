@@ -1,0 +1,492 @@
+---
+# Front matter is required so Jekyll compiles this SCSS file.
+---
+
+/* ---------- Design tokens ---------- */
+
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-soft: #f4f4f5;
+  --text: #18181b;
+  --muted: #71717a;
+  --accent: #4f46e5;
+  --accent-hover: #0d9488;
+  --border: #e4e4e7;
+
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --measure: 800px;
+  --radius: 10px;
+  --speed: 150ms;
+
+  /* Translucent nav backdrop. Kept as an explicit rgba value because the sass
+     version GitHub Pages runs cannot parse color-mix() or modern rgb() syntax. */
+  --nav-bg: rgba(250, 250, 250, 0.82);
+  --shadow: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #09090b;
+  --surface: #18181b;
+  --surface-soft: #1f1f23;
+  --text: #f4f4f5;
+  --muted: #a1a1aa;
+  --accent: #818cf8;
+  --accent-hover: #2dd4bf;
+  --border: #27272a;
+  --nav-bg: rgba(9, 9, 11, 0.82);
+  --shadow: rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--speed) ease, color var(--speed) ease;
+}
+
+p {
+  margin: 0 0 0.9rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--speed) ease;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--accent-hover);
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.sep {
+  color: var(--border);
+  margin: 0 0.45rem;
+}
+
+/* ---------- Nav ---------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-brand {
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.1rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  padding: 0;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color var(--speed) ease, border-color var(--speed) ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.icon-moon,
+[data-theme="dark"] .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .icon-moon {
+  display: block;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  gap: 2.25rem;
+  align-items: center;
+  padding: 3.25rem 0 1.5rem;
+}
+
+.hero-name {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.85rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.hero-tagline {
+  margin: 0.4rem 0 1.25rem;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.hero-photo img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  transition: transform var(--speed) ease;
+}
+
+.hero-photo img:hover {
+  transform: scale(1.03);
+}
+
+.hero-links {
+  margin-top: 1.1rem;
+  font-weight: 500;
+}
+
+/* ---------- Affiliation logos ---------- */
+
+.affiliations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  padding: 1.5rem;
+  margin: 1rem 0 0.5rem;
+
+  /* The logos are dark-on-transparent, so they need a light surface in both
+     themes to stay legible. */
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.affiliations img {
+  width: auto;
+  opacity: 0.9;
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  padding: 2.5rem 0 0.5rem;
+}
+
+.section-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 2.25rem;
+  height: 2px;
+  margin-top: 0.5rem;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ---------- News ---------- */
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: 5.75rem 1fr;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.news-item:last-child {
+  border-bottom: 0;
+}
+
+.news-date {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+  white-space: nowrap;
+}
+
+.news-text {
+  font-size: 0.95rem;
+}
+
+/* ---------- Publications ---------- */
+
+.pub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pub {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pub:last-child {
+  border-bottom: 0;
+}
+
+.pub-media img,
+.pub-media video {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+}
+
+.pub-media a:hover img,
+.pub-media a:hover video {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px var(--shadow);
+}
+
+.pub-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pub-title a {
+  color: var(--text);
+}
+
+.pub-title a:hover {
+  color: var(--accent);
+}
+
+.pub-authors,
+.pub-venue,
+.pub-links {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+}
+
+.pub-authors {
+  color: var(--muted);
+}
+
+.pub-authors strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.pub-venue {
+  color: var(--muted);
+}
+
+.pub-links {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.pub-blurb {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  margin-top: 3rem;
+  padding: 2rem 0 2.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.flag-counter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.flag-counter img {
+  margin: 0 auto;
+}
+
+.fc-dark,
+[data-theme="dark"] .fc-light {
+  display: none;
+}
+
+[data-theme="dark"] .fc-dark {
+  display: block;
+}
+
+.footer-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* ---------- Reveal animation ---------- */
+
+/* Only hidden when JavaScript is running, so a no-JS visitor still sees the page. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 480ms ease, transform 480ms ease;
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 2.25rem;
+    text-align: left;
+  }
+
+  .hero-photo {
+    order: -1;
+    width: 150px;
+  }
+
+  .pub {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .pub-media {
+    max-width: 260px;
+  }
+
+  .news-item {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .nav-brand {
+    display: none;
+  }
+
+  .nav-links {
+    margin-left: 0;
+    gap: 0.85rem;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

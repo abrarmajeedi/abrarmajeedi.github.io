@@ -1,0 +1,52 @@
+title: Abrar Majeedi
+tagline: Health AI · Multimodal Deep Learning
+author: Abrar Majeedi
+email: majeedi@wisc.edu
+description: >-
+  Abrar Majeedi works at the intersection of Health AI and multimodal deep
+  learning, building models that reason jointly over video, sensor data, and text.
+url: https://abrarmajeedi.github.io
+baseurl: ""
+
+links:
+  - label: Email
+    url: mailto:majeedi@wisc.edu
+  - label: CV
+    url: /data/Abrar_Resume.pdf
+  - label: Scholar
+    url: https://scholar.google.com/citations?user=pcGoUxoAAAAJ&hl=en
+  - label: Github
+    url: https://github.com/abrarmajeedi/
+
+affiliations:
+  - name: Health AI
+    image: images/logos/healthAi.png
+    height: 76
+  - name: Microsoft
+    image: images/logos/Microsoft-logo.webp
+    height: 34
+  - name: Amazon
+    image: images/logos/amazon.png
+    height: 34
+  - name: University of Wisconsin-Madison
+    image: images/logos/uw-logo.png
+    height: 40
+
+sass:
+  style: compressed
+
+# Setting `exclude` replaces Jekyll's defaults rather than adding to them,
+# so the standard entries have to be repeated here.
+exclude:
+  - archive/
+  - docs/
+  - README.md
+  - build.log
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - .bundle/

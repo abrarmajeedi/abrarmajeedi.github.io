@@ -1,0 +1,42 @@
+<section id="publications" class="section reveal">
+  <h2 class="section-title">selected publications</h2>
+
+  <div class="pub-list">
+    {% for pub in site.data.publications %}
+
+    {%- comment -%}
+      Render the author line: **Name** becomes bold, and any coauthor listed in
+      _data/author_links.yml becomes a link.
+    {%- endcomment -%}
+    {%- assign authors = pub.authors | replace_first: '**', '<strong>' | replace_first: '**', '</strong>' -%}
+    {%- for entry in site.data.author_links -%}
+      {%- capture anchor -%}<a href="{{ entry[1] }}">{{ entry[0] }}</a>{%- endcapture -%}
+      {%- assign authors = authors | replace: entry[0], anchor -%}
+    {%- endfor -%}
+
+    <article class="pub">
+      <div class="pub-media">
+        <a href="{{ pub.url }}">
+          {% if pub.media.type == 'video' %}
+          <video class="pub-video" muted loop playsinline preload="metadata">
+            <source src="{{ pub.media.src | relative_url }}" type="video/webm">
+          </video>
+          {% else %}
+          <img src="{{ pub.media.src | relative_url }}" alt="{{ pub.title | strip_html }}" loading="lazy">
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="pub-body">
+        <h3 class="pub-title"><a href="{{ pub.url }}">{{ pub.title }}</a></h3>
+        <p class="pub-authors">{{ authors }}</p>
+        <p class="pub-venue"><em>{{ pub.venue }}</em> {{ pub.year }}</p>
+        <p class="pub-links">
+          {% for l in pub.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
+        </p>
+        <p class="pub-blurb">{{ pub.blurb }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>

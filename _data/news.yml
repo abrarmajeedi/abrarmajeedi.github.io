@@ -1,0 +1,60 @@
+- date: Sep 2026
+  text: >-
+    Our work on AI for neonatal intubation was covered in the media:
+    <a href="https://www.med.wisc.edu/news/ai-coach-for-nicu-intubation/">UW School of Medicine and Public Health</a>,
+    <a href="https://www.wkow.com/news/uw-researchers-develop-ai-tool-to-help-train-doctors-in-critical-newborn-airway-procedure/article_7ad048ab-0015-47bc-a4ed-08c4cdbf7cfd.html">WKOW</a>,
+    and <a href="https://www.rockfordnewsfirst.com/2026/09/01/uw-team-builds-ai-tool-train-doctors-high-risk-nicu-procedure/">Rockford News First</a>.
+
+- date: Mar 2026
+  text: >-
+    Our paper <i>"DUALVISION: RGB–Infrared Multimodal Large Language Models for
+    Robust Visual Reasoning"</i> was accepted at CVPR Findings 2026.
+
+- date: Mar 2026
+  text: >-
+    Our paper <i>"SimpleCall: A Lightweight Image Restoration Agent in Label-Free
+    Environments with MLLM Perceptual Feedback"</i> was accepted at CVPR Findings 2026.
+
+- date: Feb 2026
+  text: >-
+    Our paper <i>"Analgesia and sedation trends in a level IV NICU, 2014–2024:
+    Opioid and dexmedetomidine use"</i> was accepted at Journal of Perinatology.
+
+- date: Jan 2026
+  text: >-
+    Our paper <i>"Deep learning to assess laryngoscope insertion depth during
+    neonatal intubation with video laryngoscopy"</i> was accepted at Journal of Perinatology.
+
+- date: July 2025
+  text: >-
+    Our paper <i>"Agentic Prompt Optimization for Evidence-Grounded Clinical
+    Question Answering"</i> was accepted as an Oral presentation at BioNLP @ ACL 2025.
+
+- date: June 2025
+  text: >-
+    Our team was awarded 2nd position in the Shared Task on grounded question
+    answering (QA) from electronic health records
+    (<a href="https://archehr-qa.github.io/">ArchEHR-QA 2025</a>) at BioNLP@ACL 2025.
+
+- date: June 2025
+  text: >-
+    Our paper <i>"LETS Forecast: Learning Embedology for Time Series Forecasting"</i>
+    has been accepted at the <b>International Conference on Machine Learning (ICML)</b> 2025.
+
+- date: April 2025
+  text: >-
+    Our team was awarded <b>1st place</b> in the Machine Learning Challenge at the
+    Pediatric Academic Societies (PAS) 2025 Conference, Honolulu, Hawaii.
+
+- date: Jan 2025
+  text: >-
+    Our Poster <i>"Deep learning to quantify care manipulation activities in neonatal
+    intensive care units"</i> won an <b>Award for Best Innovation in Neonatology</b> at the
+    Cleveland Clinic Children's SHINE (Symposium on Health Innovation and Neonatal
+    Excellence) Conference, Orlando, FL.
+
+- date: Nov 2024
+  text: >-
+    Our paper <i>"RICA2: Rubric-Informed, Calibrated Assessment of Actions"</i> won the
+    <b>Best Poster Award</b> at NSF Poster Competition at Purdue University,
+    West Lafayette, IN.

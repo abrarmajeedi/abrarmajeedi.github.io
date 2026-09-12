@@ -41,12 +41,15 @@ restyled beyond those.
 
 **Toolchain:** Ruby 3.3 via Homebrew, and the `github-pages` gem, which pins Jekyll and every
 plugin to the exact versions GitHub Pages runs. System Ruby 2.6.10 is not used — it is deprecated
-and native-extension builds against it are unreliable on current macOS.
+and native-extension builds against it are unreliable on current macOS. Ruby 3.3 specifically:
+`github-pages` 232 declares `ruby >= 2.6, < 4.0`, so Ruby 4.x cannot install it, and the
+version bundler falls back to on Ruby 4 (`github-pages` 223) ships liquid 4.0.3, which calls
+`String#tainted?` — removed in Ruby 3.2 — and crashes on every build.
 
 ```
 _config.yml                 site metadata, build config
 Gemfile                     github-pages gem
-index.md                    front matter + section includes only
+index.html                  front matter + section includes only
 _layouts/default.html       html shell, theme bootstrap
 _includes/
   head.html                 meta, fonts, favicon, OG tags
@@ -56,8 +59,9 @@ _includes/
   publications.html         renders _data/publications.yml
   footer.html               flag counter, credit, copyright
 _data/
-  news.yml                  12 entries
+  news.yml                  11 entries
   publications.yml          7 entries
+  author_links.yml          coauthor name -> URL
 assets/css/main.scss        design tokens + all styling
 assets/js/theme.js          theme toggle + localStorage
 archive/
@@ -69,9 +73,14 @@ Unchanged: `images/`, `data/`, `dualvision/`, `deep_edm/`, `rica2_aqa/`, `README
 
 Deleted from root after backup: `index.html`, `stylesheet.css`.
 
-**Why `index.html` must move:** with both `index.html` and `index.md` present, Jekyll serves
-the static `index.html` and ignores `index.md`. Moving it to `archive/` resolves the conflict
-and serves as the backup in one step.
+**Why `index.html` must move:** the old `index.html` has no front matter, so Jekyll treats it as
+a static file and copies it verbatim, ignoring any new landing page. Moving it to `archive/`
+resolves the conflict and serves as the backup in one step. The new root page is also
+`index.html` — with front matter this time — rather than `index.md`, because kramdown mangles
+the raw HTML the includes emit.
+
+`archive/` is listed in `exclude:`, so the backup lives in git but is **not** published to the
+site. Recovering the old page means checking it out of the branch, not visiting a URL.
 
 ## Data Model
 
@@ -79,6 +88,7 @@ and serves as the backup in one step.
 
 ```yaml
 - title: "DualVision: RGB–Infrared Multimodal Large Language Models for Robust Visual Reasoning"
+  url: "https://abrarmajeedi.github.io/dualvision/"
   authors: "**Abrar Majeedi**, Zhiyuan Ruan, Ziyi Zhao, Hongcheng Wang, Jianglin Lu, Yin Li"
   venue: "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
   year: 2026
@@ -98,13 +108,13 @@ Field contract:
   Real author URLs are preserved via the optional `author_links` map below. The six empty
   `<a href="">` tags on the old page are dropped, since they are non-functional links that
   render as unclickable styled text.
-- `author_links` — optional map of author name to URL. Any name appearing as a key is rendered
-  as a link; all other names render as plain text:
+- `_data/author_links.yml` — map of author name to URL, in its own file because
+  `publications.yml` is a YAML sequence and a top-level mapping cannot be mixed into one.
+  Any name appearing as a key is rendered as a link; all other names render as plain text:
 
   ```yaml
-  author_links:
-    Yin Li: "https://www.biostat.wisc.edu/~yli/"
-    Ryan McAdams: "https://www.pediatrics.wisc.edu/staff/mcadams-ryan/"
+  Yin Li: "https://www.biostat.wisc.edu/~yli/"
+  Ryan McAdams: "https://www.pediatrics.wisc.edu/staff/mcadams-ryan/"
   ```
 
   The five URLs that exist today (Yin Li, Ryan McAdams, Patrick Peebles, Babak Naderi,
@@ -114,7 +124,9 @@ Field contract:
 - `links` — ordered list, rendered separated by `/` as today.
 - `blurb` — required, one-sentence description.
 
-`title` links to the first entry in `links` when present, otherwise renders unlinked.
+- `url` — optional. The title and the media thumbnail link here. An explicit field rather than
+  "the first entry in `links`", because two entries need a title target that is not their first
+  link: the npj paper and the EPIC challenge entry.
 
 ### `_data/news.yml`
 
@@ -204,6 +216,19 @@ These are in the markup being replaced, so fixing them is free:
 4. Screenshots at desktop and mobile widths, in both light and dark mode.
 5. Content diff of old vs new rendered text, confirming nothing was silently dropped.
 6. Theme toggle persists across reload; OS preference respected on first visit.
+
+## Constraints Found During Implementation
+
+- **Legacy sass.** GitHub Pages runs jekyll-sass-converter 1.5.2 / sass 3.7.4, which cannot parse
+  `color-mix()` or space-separated `rgb(0 0 0 / 12%)`. Translucent values are written as plain
+  `rgba()` in the `--nav-bg` and `--shadow` tokens.
+- **`exclude:` replaces Jekyll's defaults** rather than appending to them, so `_config.yml` has to
+  restate the standard entries alongside `archive/`, `vendor/`, and `.bundle/`. Without them
+  Jekyll walks `vendor/bundle` and dies on a gem's `.markdown.erb` template.
+- **The reveal animation is gated on a `.js` class** set by the head script. `.reveal { opacity: 0 }`
+  unconditionally would render a blank page to any visitor whose JavaScript fails.
+- **Affiliation logos keep a white background in both themes.** They are dark-on-transparent PNGs
+  and become invisible on a dark surface.
 
 ## Rollout
 

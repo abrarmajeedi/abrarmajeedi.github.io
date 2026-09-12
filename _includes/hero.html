@@ -1,0 +1,36 @@
+<section id="about" class="hero reveal">
+  <div class="hero-text">
+    <h1 class="hero-name">{{ site.title }}</h1>
+    <p class="hero-tagline">{{ site.tagline }}</p>
+
+    <!-- Bio. Edit these two paragraphs directly. -->
+    <p>
+      My research sits at the intersection of <b>Health AI</b> and
+      <b>multimodal deep learning</b>: particularly building models that can reason
+      jointly over video, sensor data, and text, and solving real clinical problems,
+      especially in Neonatology. I did my PhD at the University of Wisconsin-Madison,
+      where I was fortunate to be advised by
+      <a href="https://www.biostat.wisc.edu/~yli/">Prof. Yin Li</a>.
+    </p>
+    <p>
+      I have also gained valuable research experience through internships at
+      Amazon Science, Microsoft Research and EMC.
+    </p>
+
+    <p class="hero-links">
+      {% for link in site.links %}<a href="{{ link.url }}">{{ link.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
+    </p>
+  </div>
+
+  <div class="hero-photo">
+    <a href="{{ '/images/abrar_headshot.png' | relative_url }}">
+      <img src="{{ '/images/abrar_headshot.png' | relative_url }}" alt="Abrar Majeedi">
+    </a>
+  </div>
+</section>
+
+<div class="affiliations reveal">
+  {% for a in site.affiliations %}
+  <img src="{{ a.image | relative_url }}" alt="{{ a.name }}" style="height:{{ a.height }}px">
+  {% endfor %}
+</div>
