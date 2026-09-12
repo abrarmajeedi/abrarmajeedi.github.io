@@ -124,6 +124,17 @@ Field contract:
   how the animated GIF on the LETS Forecast entry behaves. No JavaScript is involved: hover-to-play
   was tried first and left the thumbnail blank until hovered, since `preload="metadata"` fetches
   no frame to paint.
+
+  Because it autoplays on every visit, the clip is re-encoded down from the 18s/1280x720/6.5 MB
+  original to 1s/512x288/140 KB. The thumbnail renders at 170 CSS px, so 512 px still covers a 2x
+  display; the two are indistinguishable at that size. To regenerate (ffmpeg lives in the
+  `abrarmajeedi.github.io` conda env):
+
+  ```
+  ffmpeg -t 1 -i source.webm -c:v libvpx-vp9 -crf 36 -b:v 0 \
+         -vf "scale=512:-2,fps=30" -an -deadline good -cpu-used 2 -row-mt 1 \
+         images/epic_2022_video.webm
+  ```
 - `links` — ordered list, rendered separated by `/` as today.
 - `blurb` — required, one-sentence description.
 
