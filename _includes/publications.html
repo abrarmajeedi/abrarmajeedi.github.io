@@ -1,5 +1,5 @@
 <section id="publications" class="section reveal">
-  <h2 class="section-title">selected publications</h2>
+  <h2 class="section-title">Selected Publications</h2>
 
   <div class="pub-list">
     {% for pub in site.data.publications %}
@@ -18,8 +18,14 @@
       <div class="pub-media">
         <a href="{{ pub.url }}">
           {% if pub.media.type == 'video' %}
-          <video class="pub-video" muted loop playsinline preload="metadata">
+          {%- comment -%}
+            Behaves like the animated GIF used by the LETS Forecast entry: it plays and
+            loops on its own, with no JavaScript and no hover needed. `muted` plus
+            `playsinline` is what browser autoplay policies require.
+          {%- endcomment -%}
+          <video class="pub-video" autoplay muted loop playsinline>
             <source src="{{ pub.media.src | relative_url }}" type="video/webm">
+            Your browser does not support the video tag.
           </video>
           {% else %}
           <img src="{{ pub.media.src | relative_url }}" alt="{{ pub.title | strip_html }}" loading="lazy">

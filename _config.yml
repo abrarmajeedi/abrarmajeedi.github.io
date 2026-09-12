@@ -22,15 +22,15 @@ affiliations:
   - name: Health AI
     image: images/logos/healthAi.png
     height: 76
-  - name: Microsoft
-    image: images/logos/Microsoft-logo.webp
-    height: 34
-  - name: Amazon
-    image: images/logos/amazon.png
-    height: 34
   - name: University of Wisconsin-Madison
     image: images/logos/uw-logo.png
     height: 40
+  - name: Amazon
+    image: images/logos/amazon.png
+    height: 34
+  - name: Microsoft
+    image: images/logos/Microsoft-logo.webp
+    height: 34
 
 sass:
   style: compressed

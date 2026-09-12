@@ -9,16 +9,6 @@
     });
   }
 
-  // Play publication videos on hover.
-  document.querySelectorAll('.pub-video').forEach(function (video) {
-    var parent = video.closest('.pub-media');
-    parent.addEventListener('mouseenter', function () { video.play(); });
-    parent.addEventListener('mouseleave', function () {
-      video.pause();
-      video.currentTime = 0;
-    });
-  });
-
   // Fade sections in as they enter the viewport.
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var targets = document.querySelectorAll('.reveal');

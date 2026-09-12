@@ -120,7 +120,10 @@ Field contract:
   The five URLs that exist today (Yin Li, Ryan McAdams, Patrick Peebles, Babak Naderi,
   Ross Cutler) carry over unchanged.
 - `venue`, `year` — required. Rendered as italic venue followed by year.
-- `media.type` — `image` or `video`. `video` triggers hover-to-play (the EPIC entry).
+- `media.type` — `image` or `video`. `video` (the EPIC entry) autoplays muted on a loop, matching
+  how the animated GIF on the LETS Forecast entry behaves. No JavaScript is involved: hover-to-play
+  was tried first and left the thumbnail blank until hovered, since `preload="metadata"` fetches
+  no frame to paint.
 - `links` — ordered list, rendered separated by `/` as today.
 - `blurb` — required, one-sentence description.
 
