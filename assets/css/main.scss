@@ -267,6 +267,46 @@ video {
   border-radius: 2px;
 }
 
+/* ---------- Collapsible sections ---------- */
+
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--speed) ease;
+}
+
+.collapse-toggle:hover {
+  color: var(--accent);
+}
+
+.chevron {
+  flex: none;
+  color: var(--muted);
+  transition: transform 300ms ease;
+}
+
+.collapse-toggle[aria-expanded="false"] .chevron {
+  transform: rotate(-90deg);
+}
+
+/* The open height is measured and set by theme.js: transitioning `height` needs a
+   concrete pixel target, and the 0fr-to-1fr grid trick resolves to 0px in Chrome.
+   Only applied under .js, so the sections stay open when scripts do not run. */
+.js .collapse {
+  overflow: hidden;
+  transition: height 380ms ease;
+}
+
 /* ---------- News ---------- */
 
 .news-list {
@@ -319,12 +359,19 @@ video {
   border-bottom: 0;
 }
 
+/* `contain`, not `cover`: these are paper figures ranging from square to 2.16:1,
+   so cropping them to a common box cut the edges off. Letterboxing inside a fixed
+   box instead keeps every figure whole and the rows aligned. */
 .pub-media img,
 .pub-media video {
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: var(--surface-soft);
+  object-fit: contain;
+  padding: 0.35rem;
+
+  /* Four of these figures are transparent PNGs with dark linework, so they need a
+     light plate in both themes, same as the affiliation logos. */
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   transition: transform var(--speed) ease, box-shadow var(--speed) ease;

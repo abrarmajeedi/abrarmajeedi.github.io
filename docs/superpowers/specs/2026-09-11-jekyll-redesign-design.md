@@ -186,10 +186,17 @@ pairs must meet WCAG AA (4.5:1 body, 3:1 large text).
 - **News:** two-column grid, date in muted tabular numerals, right-aligned against the text.
 - **Publications:** grid with fluid `aspect-ratio` thumbnail left and content right; stacks on
   mobile. Replaces the hardcoded 160px `.one`/`.two` boxes.
+- **Thumbnails** use `object-fit: contain`, not `cover`. The figures run from 0.98:1 to 2.16:1,
+  so cropping them to a shared box cut the edges off.
+- **About and Research are always visible. News and Publications are collapsed** behind their
+  headings and slide open on click; either can be open independently. A link to a collapsed
+  section opens it, so `#news` and `#publications` still land on content.
 
 ### Motion
 
 - `IntersectionObserver` fade-up on section entry.
+- Collapse/expand animates `height` between 0 and a JS-measured `scrollHeight`. The tidier
+  `grid-template-rows: 0fr -> 1fr` approach resolves to `0px` in Chrome and does not work.
 - ~150ms transitions on link and thumbnail hover.
 - `scroll-behavior: smooth` for anchor nav.
 - Every animation wrapped in a `prefers-reduced-motion: reduce` guard that disables it.
