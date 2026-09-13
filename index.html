@@ -2,7 +2,32 @@
 layout: default
 ---
 
-{% include hero.html %}
-{% include research.html %}
-{% include news.html %}
-{% include publications.html %}
+{%- comment -%}
+  Each panel is one full-width slide. The nav slides the page sideways between
+  them and the nav row itself never moves. Without JavaScript the panels simply
+  stack down the page, so every section stays reachable.
+{%- endcomment -%}
+<div class="panel is-active" id="home">
+  <div class="container">
+    {% include hero.html %}
+    {% include research.html %}
+  </div>
+</div>
+
+<div class="panel" id="news">
+  <div class="container">
+    {% include news.html %}
+  </div>
+</div>
+
+<div class="panel" id="publications">
+  <div class="container">
+    {% include publications.html %}
+  </div>
+</div>
+
+<div class="panel" id="cv">
+  <div class="container">
+    {% include cv.html %}
+  </div>
+</div>

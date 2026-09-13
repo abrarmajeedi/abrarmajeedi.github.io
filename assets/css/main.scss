@@ -267,44 +267,78 @@ video {
   border-radius: 2px;
 }
 
-/* ---------- Collapsible sections ---------- */
+/* ---------- Sliding panels ---------- */
 
-.collapse-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  text-align: left;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  transition: color var(--speed) ease;
+/* The active panel is the only one in flow, so the deck's height follows it.
+   `overflow: hidden` on both axes: a parked panel must not be scrollable to
+   sideways, and the height is briefly pinned mid-slide, which would otherwise
+   raise a vertical scrollbar inside the deck. */
+.deck {
+  position: relative;
+  overflow: hidden;
 }
 
-.collapse-toggle:hover {
+.js .deck {
+  transition: height 500ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.js .panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+
+  /* --offset is set by theme.js so a panel enters from, and leaves toward,
+     whichever side it sits on relative to the panel it replaces. */
+  transform: translateX(var(--offset, 100%));
+  transition: transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 260ms ease;
+  pointer-events: none;
+}
+
+.js .panel.is-active {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Only matters without JS, where the panels stack down the page instead. */
+.panel + .panel {
+  margin-top: 1.5rem;
+}
+
+.js .panel + .panel {
+  margin-top: 0;
+}
+
+.nav-links a[aria-current] {
   color: var(--accent);
 }
 
-.chevron {
-  flex: none;
-  color: var(--muted);
-  transition: transform 300ms ease;
+/* ---------- CV ---------- */
+
+.cv-actions {
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
-.collapse-toggle[aria-expanded="false"] .chevron {
-  transform: rotate(-90deg);
+.cv-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-/* The open height is measured and set by theme.js: transitioning `height` needs a
-   concrete pixel target, and the 0fr-to-1fr grid trick resolves to 0px in Chrome.
-   Only applied under .js, so the sections stay open when scripts do not run. */
-.js .collapse {
-  overflow: hidden;
-  transition: height 380ms ease;
+.cv-page {
+  width: 100%;
+
+  /* The pages are rendered on white, so they keep a white plate in dark mode
+     rather than being inverted. */
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 12px var(--shadow);
 }
 
 /* ---------- News ---------- */
@@ -534,6 +568,11 @@ video {
 
   .js .reveal {
     opacity: 1;
+    transform: none;
+  }
+
+  /* Panels still swap, they just cut instead of sliding. */
+  .js .panel {
     transform: none;
   }
 }

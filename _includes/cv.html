@@ -1,0 +1,31 @@
+<section class="section">
+  <h2 class="section-title">CV</h2>
+
+  <p class="cv-actions">
+    <a href="{{ '/data/Abrar_Resume.pdf' | relative_url }}" target="_blank" rel="noopener">Open the PDF</a>
+    <span class="sep">/</span>
+    <a href="{{ '/data/Abrar_Resume.pdf' | relative_url }}" download>Download</a>
+  </p>
+
+  {%- comment -%}
+    Pre-rendered page images rather than an embedded PDF: the browser's PDF viewer
+    wraps the page in its own dark chrome, and most mobile browsers refuse to
+    display one inline at all. Picked up from disk, so adding a page to the CV
+    needs no edit here. To regenerate after replacing the PDF (poppler and ffmpeg
+    both live in the `abrarmajeedi.github.io` conda env):
+
+      pdftoppm -png -r 200 data/Abrar_Resume.pdf /tmp/p
+      ffmpeg -i /tmp/p-1.png -c:v libwebp -lossless 1 images/cv/page-1.webp
+
+    Lossless is deliberate: for text on white it is both sharper and smaller than
+    any lossy setting worth using.
+  {%- endcomment -%}
+  {%- assign cv_pages = site.static_files | where_exp: "f", "f.path contains '/images/cv/'" | sort: "path" -%}
+  <div class="cv-pages">
+    {% for page in cv_pages %}
+    <img class="cv-page" src="{{ page.path | relative_url }}"
+         alt="CV page {{ forloop.index }} of {{ cv_pages | size }}"
+         {% unless forloop.first %}loading="lazy"{% endunless %}>
+    {% endfor %}
+  </div>
+</section>

@@ -25,7 +25,8 @@ restyled beyond those.
 | Ruby | Install Homebrew Ruby + Jekyll locally | Enables local preview and pre-push build verification |
 | Palette | Indigo `#4F46E5` / teal `#0D9488` on zinc neutrals | Reads contemporary rather than institutional |
 | Dark mode | Auto (OS) + manual toggle, persisted | al-folio behavior; expected on a modern page |
-| Structure | Single page, anchor nav | Preserves current URLs; content fits comfortably |
+| Structure | Single page, horizontal slide deck | Preserves current URLs; the nav switches panels instead of scrolling |
+| CV | Rendered inline as its own panel | Requested; page images rather than an embedded PDF |
 | Footer | Keep flag counter; keep credit, reworded to al-folio | User preference |
 | Project pages | Unchanged | Deliberate; accepted visual inconsistency |
 
@@ -49,15 +50,18 @@ version bundler falls back to on Ruby 4 (`github-pages` 223) ships liquid 4.0.3,
 ```
 _config.yml                 site metadata, build config
 Gemfile                     github-pages gem
-index.html                  front matter + section includes only
-_layouts/default.html       html shell, theme bootstrap
+index.html                  the four panels, each wrapping its includes
+_layouts/default.html       html shell, theme bootstrap, full-bleed deck
 _includes/
   head.html                 meta, fonts, favicon, OG tags
-  nav.html                  sticky nav + dark-mode toggle
+  nav.html                  sticky nav (drives the deck) + dark-mode toggle
   hero.html                 name, tagline, bio, links, logo strip
+  research.html             research paragraph
   news.html                 renders _data/news.yml
   publications.html         renders _data/publications.yml
+  cv.html                   PDF links + pre-rendered page images
   footer.html               flag counter, credit, copyright
+images/cv/                  page-1.webp, page-2.webp (generated, committed)
 _data/
   news.yml                  11 entries
   publications.yml          7 entries
@@ -188,15 +192,63 @@ pairs must meet WCAG AA (4.5:1 body, 3:1 large text).
   mobile. Replaces the hardcoded 160px `.one`/`.two` boxes.
 - **Thumbnails** use `object-fit: contain`, not `cover`. The figures run from 0.98:1 to 2.16:1,
   so cropping them to a shared box cut the edges off.
-- **About and Research are always visible. News and Publications are collapsed** behind their
-  headings and slide open on click; either can be open independently. A link to a collapsed
-  section opens it, so `#news` and `#publications` still land on content.
+
+### The Slide Deck
+
+The page is a horizontal deck of four panels: **Home** (bio, logo strip, Research), **News**,
+**Publications**, **CV**. Clicking a nav link slides the whole page sideways to that panel while
+the nav row stays put. Only the nav moves the deck; there is no separate tab strip.
+
+Two earlier attempts were rejected by the user and are recorded so they are not retried:
+a collapsing accordion behind each heading ("awful and looks old"), and a pill tab strip above a
+pair of panels that slid a few rem sideways ("not in a cheap way like this").
+
+Mechanics:
+
+- The active panel is `position: relative`, so the deck's height is its height. Every other panel
+  is `position: absolute` and `translateX(±100%)`, parked a full window width off to its side.
+  The deck is full-bleed with `overflow: hidden`, so a panel travels the whole width on the way in
+  and none of them can be scrolled to sideways.
+- Document order sets direction: a panel further down enters from the right, and the one it
+  replaces leaves to the left. `theme.js` writes the side into a `--offset` custom property and
+  commits it with a layout read before adding `.is-active`, otherwise a panel that has never been
+  shown enters from whichever side it was parked on rather than the correct one.
+- The deck's height animates between the two panel heights, pinned in pixels by `theme.js` and
+  released to `auto` on `transitionend`. The target is the incoming panel's own height, not the
+  deck's `scrollHeight`, which cannot report less than the height just pinned on it — reading it
+  instead makes the deck unable to shrink.
+- Nav links call `preventDefault()`: a parked panel is out of flow, so the browser's own jump
+  would land nowhere. `#about` and `#research` both live on the Home panel, so clicking Research
+  while Home is showing only scrolls.
+- Deep links work. `/#cv` opens on that panel; the hash is kept current with `replaceState`, which
+  avoids filling the back button with panel switches.
+- **Without JavaScript the four panels stack down the page** in document order, every heading
+  visible, exactly as the page read before the deck existed.
+
+### The CV Panel
+
+The CV is shown as pre-rendered page images, not an embedded PDF: browsers wrap an inline PDF in
+their own dark viewer chrome, and most mobile browsers refuse to display one inline at all. Links
+to open and download the real PDF sit above the pages, so the file stays the source of truth.
+
+`cv.html` picks the images up from `site.static_files`, so adding a page to the CV needs no
+template edit. To regenerate after replacing the PDF (poppler and ffmpeg both live in the
+`abrarmajeedi.github.io` conda env):
+
+```
+pdftoppm -png -r 200 data/Abrar_Resume.pdf /tmp/p
+ffmpeg -i /tmp/p-1.png -c:v libwebp -lossless 1 images/cv/page-1.webp
+```
+
+200 dpi gives 1700 px wide, about 2.2x the ~760 px column. Lossless is deliberate: for text on
+white it is both sharper and smaller than any lossy setting worth using — 184 KB lossless against
+286 KB at quality 70 for the same page. Both pages together come to 330 KB.
 
 ### Motion
 
-- `IntersectionObserver` fade-up on section entry.
-- Collapse/expand animates `height` between 0 and a JS-measured `scrollHeight`. The tidier
-  `grid-template-rows: 0fr -> 1fr` approach resolves to `0px` in Chrome and does not work.
+- `IntersectionObserver` fade-up on section entry, on the Home panel only. The other panels are
+  parked outside the viewport, where the observer cannot be relied on to fire as they slide in.
+- Panel switches slide `transform` over 520ms and animate the deck `height` over 500ms.
 - ~150ms transitions on link and thumbnail hover.
 - `scroll-behavior: smooth` for anchor nav.
 - Every animation wrapped in a `prefers-reduced-motion: reduce` guard that disables it.
@@ -249,7 +301,16 @@ These are in the markup being replaced, so fixing them is free:
 - **The reveal animation is gated on a `.js` class** set by the head script. `.reveal { opacity: 0 }`
   unconditionally would render a blank page to any visitor whose JavaScript fails.
 - **Affiliation logos keep a white background in both themes.** They are dark-on-transparent PNGs
-  and become invisible on a dark surface.
+  and become invisible on a dark surface. The CV page images get the same treatment.
+- **The headless Chrome used for verification has three limits worth remembering.** It cannot
+  decode the project's webm, it does not paint an embedded PDF's page area (though it does
+  rasterize the viewer's thumbnails), and a `--window-size` narrower than the platform minimum
+  lays the page out wider than it screenshots, which looks exactly like clipped text. Animation
+  feel therefore has to be confirmed in a real browser; here the logic is checked by disabling
+  transitions and asserting the start and end states, and mobile widths by measuring inside a
+  fixed-width iframe.
+- **The `grid-template-rows: 0fr -> 1fr` reveal trick resolves to `0px` in Chrome.** Recorded from
+  the rejected accordion attempt; any future height animation needs a measured pixel target.
 
 ## Rollout
 

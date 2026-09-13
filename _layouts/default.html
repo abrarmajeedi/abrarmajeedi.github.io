@@ -4,7 +4,11 @@
 <body id="top">
   {% include nav.html %}
 
-  <main class="container">
+  {%- comment -%}
+    The deck is full-bleed, not inside a container, so a panel slides in from the
+    edge of the window. Each panel carries its own container.
+  {%- endcomment -%}
+  <main class="deck">
     {{ content }}
   </main>
 

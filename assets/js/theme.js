@@ -9,68 +9,116 @@
     });
   }
 
-  // Collapsible News and Publications sections. They ship open so the page works
-  // without JavaScript; collapsing them is done here instead.
-  var toggles = document.querySelectorAll('.collapse-toggle');
+  // The nav is a slide deck: one panel is in flow at a time and the rest are
+  // parked off to the side, so switching slides the page sideways under the nav.
+  var deck = document.querySelector('.deck');
+  var panels = [].slice.call(document.querySelectorAll('.panel'));
+  var navLinks = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
 
-  function setOpen(button, open, animate) {
-    var panel = document.getElementById(button.getAttribute('aria-controls'));
-    if (!panel || button.getAttribute('aria-expanded') === String(open)) return;
-    button.setAttribute('aria-expanded', open ? 'true' : 'false');
-
-    if (!animate) {
-      panel.style.height = open ? 'auto' : '0px';
-      return;
+  function panelOf(el) {
+    while (el && el.classList) {
+      if (el.classList.contains('panel')) return el;
+      el = el.parentNode;
     }
-
-    // Pin the current height so the transition has a concrete starting point,
-    // then hand it the measured target.
-    panel.style.height = panel.getBoundingClientRect().height + 'px';
-    var target = open ? panel.scrollHeight : 0;
-
-    // Reading a layout property commits that start value. Without the flush both
-    // assignments land in one paint and no transition runs.
-    void panel.offsetHeight;
-    panel.style.height = target + 'px';
+    return null;
   }
 
-  toggles.forEach(function (button) {
-    var panel = document.getElementById(button.getAttribute('aria-controls'));
-    setOpen(button, false, false);
-
-    button.addEventListener('click', function () {
-      setOpen(button, button.getAttribute('aria-expanded') !== 'true', true);
-    });
-
-    // Release the fixed height once open, so the panel keeps reflowing as images
-    // load or the window resizes.
-    if (panel) {
-      panel.addEventListener('transitionend', function (event) {
-        if (event.propertyName !== 'height') return;
-        if (button.getAttribute('aria-expanded') === 'true') panel.style.height = 'auto';
-      });
+  function activePanel() {
+    for (var i = 0; i < panels.length; i++) {
+      if (panels[i].classList.contains('is-active')) return panels[i];
     }
+    return null;
+  }
+
+  // Returns whether the deck actually moved, so callers know how to scroll.
+  function showPanel(next, animate) {
+    var current = activePanel();
+    if (!next || next === current) return false;
+
+    // Document order sets the direction: a panel further down the page enters
+    // from the right, and the one it replaces leaves to the left.
+    var forward = panels.indexOf(next) > panels.indexOf(current);
+    var from = deck ? deck.getBoundingClientRect().height : 0;
+
+    // Park the incoming panel on the side it should arrive from and commit that
+    // with a layout read, so the slide starts there rather than from wherever the
+    // panel happened to be left last time.
+    next.style.setProperty('--offset', forward ? '100%' : '-100%');
+    void next.offsetWidth;
+
+    if (current) {
+      current.style.setProperty('--offset', forward ? '-100%' : '100%');
+      current.classList.remove('is-active');
+    }
+    next.classList.add('is-active');
+
+    if (deck && animate) {
+      // `auto` to `auto` cannot be transitioned, so pin the old height, flush it
+      // to commit that start value, then hand over the new one. The target is the
+      // incoming panel's own height rather than the deck's scrollHeight, which
+      // cannot report less than the height just pinned on it.
+      deck.style.height = from + 'px';
+      void deck.offsetHeight;
+      deck.style.height = next.getBoundingClientRect().height + 'px';
+    }
+    return true;
+  }
+
+  // Release the pinned height once the slide is done, so the panel keeps
+  // reflowing as images load or the window resizes.
+  if (deck) {
+    deck.addEventListener('transitionend', function (event) {
+      if (event.target === deck && event.propertyName === 'height') {
+        deck.style.height = '';
+      }
+    });
+  }
+
+  function markCurrent(hash) {
+    navLinks.forEach(function (link) {
+      if (link.getAttribute('href') === hash) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  navLinks.forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      var hash = link.getAttribute('href');
+      var target = document.querySelector(hash);
+      if (!target) return;
+
+      // A parked panel is out of flow, so the browser's own jump would land
+      // nowhere. Slide to it instead, then scroll.
+      event.preventDefault();
+      var moved = showPanel(panelOf(target), true);
+      markCurrent(hash);
+
+      // On a move, the top of the deck is where the panel starts. Otherwise the
+      // link is pointing at a section of the panel already on screen.
+      (moved && deck ? deck : target).scrollIntoView({ block: 'start' });
+      try { history.replaceState(null, '', hash); } catch (e) {}
+    });
   });
 
-  // A link to a collapsed section should open it, otherwise the jump lands on a
-  // heading with nothing under it.
-  function openForHash(hash) {
-    if (!hash) return;
-    var section = document.querySelector(hash);
-    if (!section) return;
-    var button = section.querySelector('.collapse-toggle');
-    if (button) setOpen(button, true, true);
+  // Deep links still work: /#cv opens on that panel. The browser already tried to
+  // jump there while the panel was parked, so scroll again now that it is in flow.
+  if (window.location.hash) {
+    var landing = document.querySelector(window.location.hash);
+    if (landing) {
+      showPanel(panelOf(landing), false);
+      markCurrent(window.location.hash);
+      landing.scrollIntoView({ block: 'start' });
+    }
+  } else {
+    markCurrent('#about');
   }
 
-  openForHash(window.location.hash);
+  // Covers the hash being changed from outside the nav, such as by hand.
   window.addEventListener('hashchange', function () {
-    openForHash(window.location.hash);
-  });
-
-  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-    link.addEventListener('click', function () {
-      openForHash(link.getAttribute('href'));
-    });
+    var target = document.querySelector(window.location.hash);
+    if (!target) return;
+    showPanel(panelOf(target), true);
+    markCurrent(window.location.hash);
   });
 
   // Fade sections in as they enter the viewport.
