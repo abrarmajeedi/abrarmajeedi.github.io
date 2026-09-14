@@ -207,19 +207,31 @@ Mechanics:
 
 - The active panel is `position: relative`, so the deck's height is its height. Every other panel
   is `position: absolute` and `translateX(±100%)`, parked a full window width off to its side.
-  The deck is full-bleed with `overflow: hidden`, so a panel travels the whole width on the way in
-  and none of them can be scrolled to sideways.
+  The deck is full-bleed and clipped, so a panel travels the whole width on the way in and none
+  of them can be reached sideways.
 - Document order sets direction: a panel further down enters from the right, and the one it
   replaces leaves to the left. `theme.js` writes the side into a `--offset` custom property and
   commits it with a layout read before adding `.is-active`, otherwise a panel that has never been
   shown enters from whichever side it was parked on rather than the correct one.
-- The deck's height animates between the two panel heights, pinned in pixels by `theme.js` and
-  released to `auto` on `transitionend`. The target is the incoming panel's own height, not the
-  deck's `scrollHeight`, which cannot report less than the height just pinned on it — reading it
-  instead makes the deck unable to shrink.
+- **The deck's height is not animated and not touched by JavaScript at all.** The active panel is
+  the only one in flow, so CSS already sizes the deck to it. An earlier version transitioned the
+  height in pixels, which changed the length of the document while a scroll was still running and
+  left the reader in the middle of a panel or past the end of one. That was the whole of the
+  reported bugginess.
+- Only `transform` animates, so the scroll can be exact: `theme.js` measures the target after the
+  switch and jumps to it with `behavior: 'auto'`, spelled out because `scroll-behavior: smooth` in
+  the stylesheet applies to programmatic scrolls too. A link to a section of the panel already
+  showing keeps the smooth scroll — nothing is moving for it to fight.
+- Panels are parked with `visibility: hidden`, not merely transparent, which keeps their links out
+  of the tab order. The flip is delayed by the length of the slide so a panel leaving stays visible
+  on its way out.
+- The deck is clipped with `overflow: clip`, with `overflow: hidden` underneath it as the fallback.
+  `hidden` leaves the box scrollable, and the browser drags it sideways to reveal a parked panel
+  whenever a fragment points into one, which displaces the whole deck permanently. Where only
+  `hidden` is understood, `theme.js` listens for the deck scrolling and pulls it back.
 - Nav links call `preventDefault()`: a parked panel is out of flow, so the browser's own jump
-  would land nowhere. `#about` and `#research` both live on the Home panel, so clicking Research
-  while Home is showing only scrolls.
+  would land nowhere. `#about` and `#research` both live on the Home panel, so **clicking Research
+  never slides anything while Home is showing; it simply scrolls down the page.**
 - Deep links work. `/#cv` opens on that panel; the hash is kept current with `replaceState`, which
   avoids filling the back button with panel switches.
 - **Without JavaScript the four panels stack down the page** in document order, every heading
@@ -244,11 +256,16 @@ ffmpeg -i /tmp/p-1.png -c:v libwebp -lossless 1 images/cv/page-1.webp
 white it is both sharper and smaller than any lossy setting worth using — 184 KB lossless against
 286 KB at quality 70 for the same page. Both pages together come to 330 KB.
 
+The tags carry `width="1700" height="2200"` so the browser reserves the box before the image
+arrives, since the pages after the first are lazily loaded and would otherwise land with a jump.
+`.cv-page` must then set `height: auto`: those attributes apply as CSS hints, and without the
+override the page keeps its full pixel height and stretches to nearly 3x its correct size.
+
 ### Motion
 
 - `IntersectionObserver` fade-up on section entry, on the Home panel only. The other panels are
   parked outside the viewport, where the observer cannot be relied on to fire as they slide in.
-- Panel switches slide `transform` over 520ms and animate the deck `height` over 500ms.
+- Panel switches slide `transform` over 520ms. Nothing else about a switch is animated.
 - ~150ms transitions on link and thumbnail hover.
 - `scroll-behavior: smooth` for anchor nav.
 - Every animation wrapped in a `prefers-reduced-motion: reduce` guard that disables it.
@@ -311,6 +328,20 @@ These are in the markup being replaced, so fixing them is free:
   fixed-width iframe.
 - **The `grid-template-rows: 0fr -> 1fr` reveal trick resolves to `0px` in Chrome.** Recorded from
   the rejected accordion attempt; any future height animation needs a measured pixel target.
+- **Never animate the height of a box while scrolling to something inside it.** The scroll
+  destination is computed against a length that is still changing, so it lands somewhere arbitrary,
+  and if the box shrinks the browser clamps the scroll and never returns. This is why the deck's
+  height is left to CSS.
+- **`overflow: hidden` is still a scroll container.** Anything the browser wants to reveal inside
+  it — a fragment target, a focused link, a find-in-page match — it reveals by scrolling the box,
+  and nothing puts it back. `overflow: clip` is the version that only clips.
+- **Headless Chrome does not advance smooth scrolling either**, on top of not advancing CSS
+  transitions. Verification harnesses have to disable `scroll-behavior` *and* override
+  `window.scrollTo` to force `behavior: 'auto'`, since the page requests smooth scrolling in
+  JavaScript, where a stylesheet override cannot reach it.
+- **`jekyll serve` is left running in the background from earlier in the session and watches the
+  tree**, so every source edit rebuilds and wipes `_site`, taking any verification harness written
+  there with it. Write the harness, then run it, without editing a source file in between.
 
 ## Rollout
 

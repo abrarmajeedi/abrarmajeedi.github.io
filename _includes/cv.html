@@ -23,7 +23,12 @@
   {%- assign cv_pages = site.static_files | where_exp: "f", "f.path contains '/images/cv/'" | sort: "path" -%}
   <div class="cv-pages">
     {% for page in cv_pages %}
-    <img class="cv-page" src="{{ page.path | relative_url }}"
+    {%- comment -%}
+      The dimensions are stated so the browser reserves the right box before the
+      image arrives, otherwise the lazy-loaded pages land with a jump. Letter paper
+      at 200 dpi; a page of another size simply overrides them with its own.
+    {%- endcomment -%}
+    <img class="cv-page" src="{{ page.path | relative_url }}" width="1700" height="2200"
          alt="CV page {{ forloop.index }} of {{ cv_pages | size }}"
          {% unless forloop.first %}loading="lazy"{% endunless %}>
     {% endfor %}

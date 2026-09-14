@@ -11,9 +11,12 @@
 
   // The nav is a slide deck: one panel is in flow at a time and the rest are
   // parked off to the side, so switching slides the page sideways under the nav.
+  var nav = document.querySelector('.nav');
   var deck = document.querySelector('.deck');
   var panels = [].slice.call(document.querySelectorAll('.panel'));
   var navLinks = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canScrollSmooth = 'scrollBehavior' in document.documentElement.style;
 
   function panelOf(el) {
     while (el && el.classList) {
@@ -30,15 +33,18 @@
     return null;
   }
 
-  // Returns whether the deck actually moved, so callers know how to scroll.
-  function showPanel(next, animate) {
+  // Returns whether the deck actually moved, so callers know how to scroll. The
+  // deck's height is left entirely to CSS: the active panel is the only one in
+  // flow, so the deck is already exactly as tall as it. Animating that height is
+  // what made the page unusable, because it changed the length of the document
+  // underneath a scroll that was still running.
+  function showPanel(next) {
     var current = activePanel();
     if (!next || next === current) return false;
 
     // Document order sets the direction: a panel further down the page enters
     // from the right, and the one it replaces leaves to the left.
     var forward = panels.indexOf(next) > panels.indexOf(current);
-    var from = deck ? deck.getBoundingClientRect().height : 0;
 
     // Park the incoming panel on the side it should arrive from and commit that
     // with a layout read, so the slide starts there rather than from wherever the
@@ -51,27 +57,36 @@
       current.classList.remove('is-active');
     }
     next.classList.add('is-active');
-
-    if (deck && animate) {
-      // `auto` to `auto` cannot be transitioned, so pin the old height, flush it
-      // to commit that start value, then hand over the new one. The target is the
-      // incoming panel's own height rather than the deck's scrollHeight, which
-      // cannot report less than the height just pinned on it.
-      deck.style.height = from + 'px';
-      void deck.offsetHeight;
-      deck.style.height = next.getBoundingClientRect().height + 'px';
-    }
     return true;
   }
 
-  // Release the pinned height once the slide is done, so the panel keeps
-  // reflowing as images load or the window resizes.
-  if (deck) {
-    deck.addEventListener('transitionend', function (event) {
-      if (event.target === deck && event.propertyName === 'height') {
-        deck.style.height = '';
-      }
-    });
+  // For browsers without `overflow: clip`, where the deck falls back to
+  // `overflow: hidden` and so is still scrollable: the browser drags it sideways to
+  // reach a parked panel whenever a fragment points into one, which leaves the
+  // contents displaced for good. Put it back whenever it moves.
+  function anchorDeck() {
+    if (!deck) return;
+    deck.scrollLeft = 0;
+    deck.scrollTop = 0;
+  }
+
+  if (deck) deck.addEventListener('scroll', anchorDeck);
+
+  // Lands the section just below the sticky nav, which would otherwise cover it.
+  function scrollToSection(el, instant) {
+    var top = el.getBoundingClientRect().top + (window.pageYOffset || 0);
+    if (nav) top -= nav.getBoundingClientRect().height + 12;
+    if (top < 0) top = 0;
+
+    // `behavior` is spelled out rather than left to the stylesheet, which applies
+    // smooth scrolling to programmatic scrolls too. After a panel switch the
+    // reader should simply be at the top of the new panel; animating the scroll as
+    // well as the slide is what read as broken.
+    if (canScrollSmooth) {
+      window.scrollTo({ top: top, behavior: instant || reduced ? 'auto' : 'smooth' });
+    } else {
+      window.scrollTo(0, top);
+    }
   }
 
   function markCurrent(hash) {
@@ -81,48 +96,46 @@
     });
   }
 
+  // About and Research are sections of the Home panel rather than panels of their
+  // own, so with Home showing this is a plain scroll and the deck never moves.
+  function goTo(hash, instant) {
+    if (!hash || hash === '#') return false;
+    var target = document.querySelector(hash);
+    if (!target) return false;
+
+    var switched = showPanel(panelOf(target));
+    // Measured after the switch: the panel that just came into flow is what
+    // decides where the target sits and how far the document can scroll.
+    scrollToSection(target, instant || switched);
+    markCurrent(hash);
+    return true;
+  }
+
   navLinks.forEach(function (link) {
     link.addEventListener('click', function (event) {
-      var hash = link.getAttribute('href');
-      var target = document.querySelector(hash);
-      if (!target) return;
-
       // A parked panel is out of flow, so the browser's own jump would land
-      // nowhere. Slide to it instead, then scroll.
+      // nowhere. Only take the click over once there is somewhere to take it.
+      var hash = link.getAttribute('href');
+      if (!goTo(hash)) return;
       event.preventDefault();
-      var moved = showPanel(panelOf(target), true);
-      markCurrent(hash);
-
-      // On a move, the top of the deck is where the panel starts. Otherwise the
-      // link is pointing at a section of the panel already on screen.
-      (moved && deck ? deck : target).scrollIntoView({ block: 'start' });
       try { history.replaceState(null, '', hash); } catch (e) {}
     });
   });
 
   // Deep links still work: /#cv opens on that panel. The browser already tried to
   // jump there while the panel was parked, so scroll again now that it is in flow.
-  if (window.location.hash) {
-    var landing = document.querySelector(window.location.hash);
-    if (landing) {
-      showPanel(panelOf(landing), false);
-      markCurrent(window.location.hash);
-      landing.scrollIntoView({ block: 'start' });
-    }
-  } else {
-    markCurrent('#about');
-  }
+  if (!goTo(window.location.hash, true)) markCurrent('#about');
+
+  // The browser's own jump happens before this script runs, so its head start has to
+  // be undone by hand once; the listener above catches every later one.
+  anchorDeck();
 
   // Covers the hash being changed from outside the nav, such as by hand.
   window.addEventListener('hashchange', function () {
-    var target = document.querySelector(window.location.hash);
-    if (!target) return;
-    showPanel(panelOf(target), true);
-    markCurrent(window.location.hash);
+    goTo(window.location.hash, true);
   });
 
   // Fade sections in as they enter the viewport.
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var targets = document.querySelectorAll('.reveal');
 
   if (reduced || !('IntersectionObserver' in window)) {
