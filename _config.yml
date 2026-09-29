@@ -11,8 +11,6 @@ baseurl: ""
 links:
   - label: Email
     url: mailto:majeedi@wisc.edu
-  - label: CV
-    url: /data/Abrar_Resume.pdf
   - label: Scholar
     url: https://scholar.google.com/citations?user=pcGoUxoAAAAJ&hl=en
   - label: Github
