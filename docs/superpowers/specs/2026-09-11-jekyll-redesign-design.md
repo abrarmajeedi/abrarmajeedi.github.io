@@ -195,7 +195,7 @@ pairs must meet WCAG AA (4.5:1 body, 3:1 large text).
 
 ### The Slide Deck
 
-The page is a horizontal deck of four panels: **Home** (bio, logo strip, Research), **News**,
+The page is a horizontal deck of five panels: **Home** (bio, logo strip, the latest five news items), **Research**, **News** (every item),
 **Publications**, **CV**. Clicking a nav link slides the whole page sideways to that panel while
 the nav row stays put. Only the nav moves the deck; there is no separate tab strip.
 
@@ -230,8 +230,9 @@ Mechanics:
   whenever a fragment points into one, which displaces the whole deck permanently. Where only
   `hidden` is understood, `theme.js` listens for the deck scrolling and pulls it back.
 - Nav links call `preventDefault()`: a parked panel is out of flow, so the browser's own jump
-  would land nowhere. `#about` and `#research` both live on the Home panel, so **clicking Research
-  never slides anything while Home is showing; it simply scrolls down the page.**
+  would land nowhere. A link into the panel already
+  showing is a plain scroll. Research is its own panel; it first lived on Home, which read as a
+  duplicate next to the Research nav link.
 - Deep links work. `/#cv` opens on that panel; the hash is kept current with `replaceState`, which
   avoids filling the back button with panel switches.
 - **Without JavaScript the four panels stack down the page** in document order, every heading

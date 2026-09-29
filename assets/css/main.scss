@@ -217,8 +217,23 @@ video {
 }
 
 .hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
   margin-top: 1.1rem;
   font-weight: 500;
+}
+
+.hero-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.icon {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
 }
 
 /* ---------- Affiliation logos ---------- */
@@ -386,6 +401,12 @@ video {
 
 .news-text {
   font-size: 0.95rem;
+}
+
+.news-more {
+  margin: 0.9rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 /* ---------- Publications ---------- */

@@ -10,11 +10,17 @@ baseurl: ""
 
 links:
   - label: Email
+    icon: email
     url: mailto:majeedi@wisc.edu
   - label: Scholar
+    icon: scholar
     url: https://scholar.google.com/citations?user=pcGoUxoAAAAJ&hl=en
-  - label: Github
+  - label: GitHub
+    icon: github
     url: https://github.com/abrarmajeedi/
+  - label: LinkedIn
+    icon: linkedin
+    url: https://www.linkedin.com/in/abrarmajeedi/
 
 affiliations:
   - name: Health AI

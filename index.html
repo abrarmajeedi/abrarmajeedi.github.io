@@ -10,6 +10,12 @@ layout: default
 <div class="panel is-active" id="home">
   <div class="container">
     {% include hero.html %}
+    {% include news.html limit=5 title="Latest News" %}
+  </div>
+</div>
+
+<div class="panel" id="research">
+  <div class="container">
     {% include research.html %}
   </div>
 </div>

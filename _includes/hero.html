@@ -22,7 +22,7 @@
         Everything opens in a new tab except mailto:, which would otherwise leave
         an empty tab behind after handing off to the mail client.
       {%- endcomment -%}
-      {% for link in site.links %}{% assign newtab = ' target="_blank" rel="noopener"' %}{% if link.url contains 'mailto:' %}{% assign newtab = '' %}{% endif %}<a href="{{ link.url }}"{{ newtab }}>{{ link.label }}</a>{% unless forloop.last %}<span class="sep">/</span>{% endunless %}{% endfor %}
+      {% for link in site.links %}{% assign newtab = ' target="_blank" rel="noopener"' %}{% if link.url contains 'mailto:' %}{% assign newtab = '' %}{% endif %}<a href="{{ link.url }}"{{ newtab }}>{% include icon.html name=link.icon %}<span>{{ link.label }}</span></a>{% endfor %}
     </p>
   </div>
 

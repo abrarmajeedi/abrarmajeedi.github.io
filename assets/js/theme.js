@@ -15,6 +15,8 @@
   var deck = document.querySelector('.deck');
   var panels = [].slice.call(document.querySelectorAll('.panel'));
   var navLinks = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  // In-page links outside the nav that open a panel, such as Home's "All news".
+  var panelLinks = navLinks.concat([].slice.call(document.querySelectorAll('a.panel-link')));
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canScrollSmooth = 'scrollBehavior' in document.documentElement.style;
 
@@ -111,7 +113,7 @@
     return true;
   }
 
-  navLinks.forEach(function (link) {
+  panelLinks.forEach(function (link) {
     link.addEventListener('click', function (event) {
       // A parked panel is out of flow, so the browser's own jump would land
       // nowhere. Only take the click over once there is somewhere to take it.
