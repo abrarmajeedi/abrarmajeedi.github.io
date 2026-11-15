@@ -1,10 +1,17 @@
 <section class="section">
   <h2 class="section-title">CV</h2>
 
+  {%- comment -%}
+    The PDF and page images keep the same names when the CV is replaced, so
+    browsers would keep showing the cached old ones. The build time is appended to
+    every URL to make each build fetch them fresh.
+  {%- endcomment -%}
+  {%- assign cv_version = site.time | date: "%s" -%}
+
   <p class="cv-actions">
-    <a href="{{ '/data/Abrar_Resume.pdf' | relative_url }}" target="_blank" rel="noopener">Open the PDF</a>
+    <a href="{{ '/data/Abrar_Resume.pdf' | relative_url }}?v={{ cv_version }}" target="_blank" rel="noopener">Open the PDF</a>
     <span class="sep">/</span>
-    <a href="{{ '/data/Abrar_Resume.pdf' | relative_url }}" download>Download</a>
+    <a href="{{ '/data/Abrar_Resume.pdf' | relative_url }}?v={{ cv_version }}" download>Download</a>
   </p>
 
   {%- comment -%}
@@ -28,7 +35,7 @@
       image arrives, otherwise the lazy-loaded pages land with a jump. Letter paper
       at 200 dpi; a page of another size simply overrides them with its own.
     {%- endcomment -%}
-    <img class="cv-page" src="{{ page.path | relative_url }}" width="1700" height="2200"
+    <img class="cv-page" src="{{ page.path | relative_url }}?v={{ cv_version }}" width="1700" height="2200"
          alt="CV page {{ forloop.index }} of {{ cv_pages | size }}"
          {% unless forloop.first %}loading="lazy"{% endunless %}>
     {% endfor %}
