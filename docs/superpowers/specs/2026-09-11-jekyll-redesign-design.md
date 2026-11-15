@@ -56,7 +56,6 @@ _includes/
   head.html                 meta, fonts, favicon, OG tags
   nav.html                  sticky nav (drives the deck) + dark-mode toggle
   hero.html                 name, tagline, bio, links, logo strip
-  research.html             research paragraph
   news.html                 renders _data/news.yml
   publications.html         renders _data/publications.yml
   cv.html                   PDF links + pre-rendered page images
@@ -195,7 +194,7 @@ pairs must meet WCAG AA (4.5:1 body, 3:1 large text).
 
 ### The Slide Deck
 
-The page is a horizontal deck of five panels: **Home** (bio, logo strip, the latest five news items), **Research**, **News** (every item),
+The page is a horizontal deck of four panels: **Home** (bio, logo strip, the latest five news items), **News** (every item),
 **Publications**, **CV**. Clicking a nav link slides the whole page sideways to that panel while
 the nav row stays put. Only the nav moves the deck; there is no separate tab strip.
 
@@ -231,8 +230,9 @@ Mechanics:
   `hidden` is understood, `theme.js` listens for the deck scrolling and pulls it back.
 - Nav links call `preventDefault()`: a parked panel is out of flow, so the browser's own jump
   would land nowhere. A link into the panel already
-  showing is a plain scroll. Research is its own panel; it first lived on Home, which read as a
-  duplicate next to the Research nav link.
+  showing is a plain scroll. There is no Research section: it
+  lived on Home, then on a panel of its own, and was finally removed because the bio already
+  says the same thing.
 - Deep links work. `/#cv` opens on that panel; the hash is kept current with `replaceState`, which
   avoids filling the back button with panel switches.
 - **Without JavaScript the four panels stack down the page** in document order, every heading
